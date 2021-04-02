@@ -1,0 +1,10 @@
+{% extends "main_template.html" %}
+{% block title %}{{ person }}{% endblock %}
+{% block content %}
+<b> INFO: </b></br> {{ person }}
+
+<form action="/add" method="get">
+    {% csrf_token %}
+    <input type="submit" value="Create">
+</form>
+{% endblock %}
