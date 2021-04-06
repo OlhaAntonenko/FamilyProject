@@ -1,4 +1,5 @@
 from django.db import models
+from django.shortcuts import reverse
 
 
 class PersonModel(models.Model):
@@ -20,3 +21,6 @@ class PersonModel(models.Model):
 
     def __str__(self):
         return f'{self.last_name or ""} {self.first_name or ""} {self.patronymic_name or ""}'
+
+    def get_absolute_url(self):
+        return reverse('person_info', args=[self.id])

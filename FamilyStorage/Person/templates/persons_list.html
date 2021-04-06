@@ -1,0 +1,18 @@
+{% extends "main_template.html" %}
+{% block title %}All persons{% endblock %}
+{% block content %}
+
+    {% if persons_list %}
+    <ul>
+
+      {% for person in persons_list %}
+      <li>
+        <a href="{{ person.get_absolute_url }}">{{ person }}</a>
+      </li><br>
+      {% endfor %}
+
+    </ul>
+    {% else %}
+      <p>There are no persons.</p>
+    {% endif %} 
+{% endblock %}

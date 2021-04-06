@@ -1,10 +1,20 @@
 {% extends "main_template.html" %}
 {% block title %}{{ person }}{% endblock %}
 {% block content %}
-<b> INFO: </b></br> {{ person }}
+  <h1>{{ person }}</h1>
 
-<form action="/add" method="get">
-    {% csrf_token %}
-    <input type="submit" value="Create">
+  <p><strong>First name:</strong> {{ person.first_name }} <a href="{% url 'update_person_info' pid=person.id field='first_name'%}">edit</a></br></p>
+  <p><strong>Last name:</strong> {{ person.last_name }} <a href="{% url 'update_person_info' pid=person.id field='last_name'%}">edit</a></br></p>
+  <p><strong>Patronymic name:</strong> {{ person.patronymic_name }} <a href="{% url 'update_person_info' pid=person.id field='patronymic_name'%}">edit</a></br></p>
+  <p><strong>Gender:</strong> {{ person.gender }} <a href="{% url 'update_person_info' pid=person.id field='gender'%}">edit</a></br></p>
+  <p><strong>Date of birth:</strong> {{ person.date_of_birth }} <a href="{% url 'update_person_info' pid=person.id field='date_of_birth'%}">edit</a></br></p>
+  <p><strong>Place of birth:</strong> {{ person.place_of_birth }} <a href="{% url 'update_person_info' pid=person.id field='place_of_birth'%}">edit</a></br></p>
+  <p><strong>Date of death:</strong> {{ person.date_of_death }} <a href="{% url 'update_person_info' pid=person.id field='date_of_death'%}">edit</a></br></p>
+  <p><strong>Place of death:</strong> {{ person.place_of_death }} <a href="{% url 'update_person_info' pid=person.id field='place_of_death'%}">edit</a></br></p>
+  <p><strong>Info:</strong> {{ person.info }} <a href="{% url 'update_person_info' pid=person.id field='info'%}">edit</a></br></p>
+
+<form action="{% url 'delete_person' person.id %}" method="post" >
+  {% csrf_token %}
+  <input type="submit" value="Delete">
 </form>
 {% endblock %}
