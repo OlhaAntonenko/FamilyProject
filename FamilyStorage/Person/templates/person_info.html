@@ -3,18 +3,17 @@
 {% block content %}
   <h1>{{ person }}</h1>
 
-  <p><strong>First name:</strong> {{ person.first_name }} <a href="{% url 'update_person_info' pid=person.id field='first_name'%}">edit</a></br></p>
-  <p><strong>Last name:</strong> {{ person.last_name }} <a href="{% url 'update_person_info' pid=person.id field='last_name'%}">edit</a></br></p>
-  <p><strong>Patronymic name:</strong> {{ person.patronymic_name }} <a href="{% url 'update_person_info' pid=person.id field='patronymic_name'%}">edit</a></br></p>
-  <p><strong>Gender:</strong> {{ person.gender }} <a href="{% url 'update_person_info' pid=person.id field='gender'%}">edit</a></br></p>
-  <p><strong>Date of birth:</strong> {{ person.date_of_birth }} <a href="{% url 'update_person_info' pid=person.id field='date_of_birth'%}">edit</a></br></p>
-  <p><strong>Place of birth:</strong> {{ person.place_of_birth }} <a href="{% url 'update_person_info' pid=person.id field='place_of_birth'%}">edit</a></br></p>
-  <p><strong>Date of death:</strong> {{ person.date_of_death }} <a href="{% url 'update_person_info' pid=person.id field='date_of_death'%}">edit</a></br></p>
-  <p><strong>Place of death:</strong> {{ person.place_of_death }} <a href="{% url 'update_person_info' pid=person.id field='place_of_death'%}">edit</a></br></p>
-  <p><strong>Info:</strong> {{ person.info }} <a href="{% url 'update_person_info' pid=person.id field='info'%}">edit</a></br></p>
+  <p><strong>First name:</strong> {{ person.first_name }} </p>
+  <p><strong>Last name:</strong> {{ person.last_name }} </p>
+  <p><strong>Patronymic name:</strong> {{ person.patronymic_name }} </p>
+  <p><strong>Gender:</strong> {{ person.gender }} </p>
+  <p><strong>Date of birth:</strong> {{ person.date_of_birth }} </p>
+  <p><strong>Place of birth:</strong> {{ person.place_of_birth }} </p>
+  <p><strong>Date of death:</strong> {{ person.date_of_death }} </p>
+  <p><strong>Place of death:</strong> {{ person.place_of_death }} </p>
+  <p><strong>Info:</strong> {{ person.info }} </p>
 
-<form action="{% url 'delete_person' person.id %}" method="post" >
-  {% csrf_token %}
-  <input type="submit" value="Delete">
-</form>
+<a href="{% url 'update_person' person.id %}" class="btn btn-default">Update</a>
+<br>
+<a href="{% url 'delete_person' person.id %}" class="btn btn-default">Delete</a>
 {% endblock %}

@@ -1,12 +1,11 @@
 from django.urls import path
-from django.conf.urls import url
 
-from Person.views import delete_person, PersonListView, person_info, update_person_info
-
+from Person.views import PersonCreate, PersonDelete, PersonInfoView, PersonListView, PersonUpdate
 
 urlpatterns = [
     path('', PersonListView.as_view(), name='all_persons'),
-    path('<int:pid>/', person_info, name='person_info'),
-    path('<int:pid>/update_<str:field>', update_person_info, name='update_person_info'),
-    path('<int:pid>/delete_person', delete_person, name='delete_person'),
+    path('add/', PersonCreate.as_view(), name='add_person'),
+    path('<int:pk>/', PersonInfoView.as_view(), name='person_info'),
+    path('<int:pk>/update/', PersonUpdate.as_view(), name='update_person'),
+    path('<int:pk>/delete/', PersonDelete.as_view(), name='delete_person'),
 ]

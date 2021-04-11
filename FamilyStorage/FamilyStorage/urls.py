@@ -19,13 +19,11 @@ from django.contrib import admin
 from django.urls import include, path
 
 from FamilyStorage.views import home_page, main_page, sign_in
-from Person.views import add_person
 
 urlpatterns = [
     path('', main_page, name='main_page'),
     path('admin/', admin.site.urls),
     path('home/', home_page, name='home_page'),
-    path('add/', add_person, name='add_person'),
     path('accounts/', include('django.contrib.auth.urls')),
     path('sign_in/', sign_in, name='sign_in'),
 ]
