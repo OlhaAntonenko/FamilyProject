@@ -15,11 +15,11 @@ body {
 
 /* Style the header */
 header {
-  background-color: #666;
-  padding: 10px;
-  text-align: center;
-  /*font-size: 35px;*/
-  color: white;
+  background-color: #999;
+  padding: 20px;
+  text-align: right;
+  font-size: 20px;
+  color: black;
 }
 
 /* Create two columns/boxes that floats next to each other */
@@ -75,38 +75,29 @@ footer {
 <body>
 
 <header>
-  <p>Header</p>
+    {% if user.is_authenticated %}
+        User: {{ user.get_username }}</p>
+        <a href="{% url 'logout'%}?next={{request.path}}">Logout</a>
+    {% else %}
+        <a href="{% url 'sign_in'%}?next={{request.path}}">Sign-in</a>
+        <a href="{% url 'login'%}?next={{request.path}}">Login</a>
+    {% endif %}
 </header>
 
 <section>
   <nav>
     <ul>
-        <li><a href="{% url 'main_page' %}">Main page</a></li>
-        <li><a href="{% url 'all_persons' %}">Persons</a></li>
-        <li><a href="{% url 'add_person' %}">Add person</a></li>
+        {% if user.is_authenticated %}
+            <li><a href="{% url 'home_page' %}">Home page</a></li>
+            <li><a href="{% url 'all_persons' %}">Persons</a></li>
+            <li><a href="{% url 'add_person' %}">Add person</a></li>
+        {% endif %}
     </ul>
 
   </nav>
 
   <text>
     {% block content %}{% endblock %}
-  {% block pagination %}
-  {% if is_paginated %}
-      <div class="pagination">
-          <span class="page-links">
-              {% if page_obj.has_previous %}
-                  <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}"><<</a>
-              {% endif %}
-              <span class="page-current">
-                  Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
-              </span>
-              {% if page_obj.has_next %}
-                  <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">>></a>
-              {% endif %}
-          </span>
-      </div>
-  {% endif %}
-{% endblock %}
   </text>
 </section>
 

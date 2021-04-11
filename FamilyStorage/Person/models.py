@@ -3,8 +3,8 @@ from django.shortcuts import reverse
 
 
 class PersonModel(models.Model):
-    first_name = models.CharField(max_length=150, null=True, blank=True)
-    last_name = models.CharField(max_length=150, null=True)
+    first_name = models.CharField(max_length=150, null=True)
+    last_name = models.CharField(max_length=150, null=True, blank=True)
     patronymic_name = models.CharField(max_length=150, null=True, blank=True)
     gender = models.CharField(max_length=1, default='N',
                               choices=[('M', 'Male'), ('F', 'Female'), ('N', 'NotKnown')])
