@@ -3,7 +3,7 @@
 {% block content %}
 
     {% if persons_list %}
-    <ul>
+    <ol>
 
       {% for person in persons_list %}
       <li>
@@ -11,7 +11,7 @@
       </li><br>
       {% endfor %}
 
-    </ul>
+    </ol>
     {% else %}
       <p>There are no persons.</p>
     {% endif %} 

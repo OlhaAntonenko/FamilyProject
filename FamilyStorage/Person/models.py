@@ -7,7 +7,7 @@ class PersonModel(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     first_name = models.CharField(max_length=150, default='')
     last_name = models.CharField(max_length=150, default='', blank=True)
-    patronymic_name = models.CharField(max_length=150, null=True, blank=True)
+    patronymic_name = models.CharField(max_length=150, default='', blank=True)
     gender = models.CharField(max_length=1, default='N',
                               choices=[('M', 'Male'), ('F', 'Female'), ('N', 'NotKnown')])
     date_of_birth = models.DateField(null=True, blank=True)
@@ -19,7 +19,7 @@ class PersonModel(models.Model):
                                related_name='mother_children')
     father = models.ForeignKey("self", on_delete=models.CASCADE, null=True, blank=True,
                                related_name='father_children')
-    # siblings = models.ManyToManyField("self", blank=True, symmetrical=False)
+    # siblings = models.ManyToManyField("self", blank=True)
     # photos = models.ImageField(upload_to='photos/', null=True, blank=True, height_field=100, width_field=100)
 
     # files = models.FileField()
