@@ -1,38 +1,80 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
-<title>{% block title %}{% endblock %}</title>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-* {
-  box-sizing: border-box;
-}
-
-body {
+<title>FamilyGuardian</title>
+<link rel="icon" href="{% static 'i.png' %}" type="image/png">
+</head>
+<body>
+<style> {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-/* Style the header */
 header {
-  background-color: #999;
-  padding: 20px;
+  position:relative;
+  background-color: #612a11;
+  padding: 33px;
   text-align: right;
-  font-size: 20px;
-  color: black;
+  font-size: 80%;
+  color: #fab74d;
+  font-family: CENTURY SCHOOLBOOK, Helvetica, sans-serif;
 }
 
-/* Create two columns/boxes that floats next to each other */
-nav {
-  float: left;
-  width: 10%;
-  height: 82vh; /* only for demonstration, should be removed */
-  background: #ccc;
-  padding: 20px;
-  font-size: 20px;
+img{
+  position:absolute;
+  top:10px;
+  left:10px;
+}
+h0{
+  font: 35px CENTURY SCHOOLBOOK;
+  top:25px;
+  left: 80px;
+  position:absolute;
+}
+aa{
+    font: 20px CENTURY SCHOOLBOOK;
+    top:39px;
+    left: 400px;
+    color: #fab74d;
+    position:absolute;
+}
+bb{
+    font: 20px CENTURY SCHOOLBOOK;
+    top:39px;
+    left: 520px;
+    color: #fab74d;
+    position:absolute;
+}
+cc{
+    font: 20px CENTURY SCHOOLBOOK;
+    top:39px;
+    left: 613px;
+    color: #fab74d;
+    position:absolute;
+}
+dd{
+    font: 20px CENTURY SCHOOLBOOK;
+    top:39px;
+    left: 1250px;
+    color: #fab74d;
+    position:absolute;
+}
+ee{
+    font: 20px CENTURY SCHOOLBOOK;
+    top:39px;
+    left: 1159px;
+    color: #fab74d;
+    position:absolute;
+}
+ff{
+    font: 20px CENTURY SCHOOLBOOK;
+    top:39px;
+    left: 1250px;
+    color: #fab74d;
+    position:absolute;
 }
 
-/* Style the list inside the menu */
 nav ul {
   list-style-type: none;
   float: left;
@@ -43,27 +85,22 @@ nav ul {
 text {
   float: left;
   padding: 20px;
-  width: 90%;
-  background-color: #f1f1f1;
+  width: 97%;
+  background-color: #ddc08d;
   height: 82vh; /* only for demonstration, should be removed */
 }
-
-/* Clear floats after the columns */
 section::after {
   content: "";
   display: table;
   clear: both;
 }
 
-/* Style the footer */
 footer {
-  background-color: #777;
+  background-color: #612a11;
   padding: 10px;
   text-align: center;
-  color: white;
+  color: floralwhite;
 }
-
-/* Responsive layout - makes the two columns/boxes stack on top of each other instead of next to each other, on small screens */
 @media (max-width: 600px) {
   nav, text {
     width: 100%;
@@ -72,29 +109,28 @@ footer {
 }
 </style>
 </head>
-<body>
 
 <header>
+<p><img src="{% static 'i.png' %}" alt="Иконка" width="60" height="60"></p>
+<div class = "title"><h0>FamilyGuardian</h0>
+<ul>
+ <a href="{% url 'main_page' %}"><aa>Main page</aa></a>
+ <a href="{% url 'all_persons' %}"><bb>Persons</bb></a>
+ <a href="{% url 'add_person' %}"><cc>Add person</cc></a>
+</ul>
+</div>
+
     {% if user.is_authenticated %}
-        User: {{ user.get_username }}</p>
-        <a href="{% url 'logout'%}?next={{request.path}}">Logout</a>
-    {% else %}
-        <a href="{% url 'sign_in'%}?next={{request.path}}">Sign-in</a>
-        <a href="{% url 'login'%}?next={{request.path}}">Login</a>
-    {% endif %}
+       User: {{ user.get_username }}</p>
+       <a href="{% url 'logout'%}?next={{request.path}}"><dd>Logout</dd></a>
+   {% else %}
+       <a href="{% url 'sign_in'%}?next={{request.path}}"><ee>Sign-in</ee></a>
+       <a href="{% url 'login'%}?next={{request.path}}"><ff>Login</ff></a>
+   {% endif %}
 </header>
 
-<section>
-  <nav>
-    <ul>
-        {% if user.is_authenticated %}
-            <li><a href="{% url 'home_page' %}">Home page</a></li>
-            <li><a href="{% url 'all_persons' %}">Persons</a></li>
-            <li><a href="{% url 'add_person' %}">Add person</a></li>
-        {% endif %}
-    </ul>
 
-  </nav>
+<section>
 
   <text>
     {% block content %}{% endblock %}
