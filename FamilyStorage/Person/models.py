@@ -1,19 +1,27 @@
 from django.db import models
 from django.shortcuts import reverse
+from django.contrib.auth.models import User
 
 
 class PersonModel(models.Model):
-    first_name = models.CharField(max_length=150, null=True)
-    last_name = models.CharField(max_length=150, null=True, blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    first_name = models.CharField(max_length=150, default='')
+    last_name = models.CharField(max_length=150, default='', blank=True)
     patronymic_name = models.CharField(max_length=150, null=True, blank=True)
     gender = models.CharField(max_length=1, default='N',
                               choices=[('M', 'Male'), ('F', 'Female'), ('N', 'NotKnown')])
     date_of_birth = models.DateField(null=True, blank=True)
     date_of_death = models.DateField(null=True, blank=True)
-    info = models.TextField(max_length=1000, null=True, blank=True)
-    place_of_birth = models.CharField(max_length=150, null=True, blank=True)
-    place_of_death = models.CharField(max_length=150, null=True, blank=True)
-    # photos = models.ImageField()  TODO: main photo?
+    info = models.TextField(max_length=1000, default='', blank=True)
+    place_of_birth = models.CharField(max_length=150, default='', blank=True)
+    place_of_death = models.CharField(max_length=150, default='', blank=True)
+    mother = models.ForeignKey("self", on_delete=models.CASCADE, null=True, blank=True,
+                               related_name='mother_children')
+    father = models.ForeignKey("self", on_delete=models.CASCADE, null=True, blank=True,
+                               related_name='father_children')
+    # siblings = models.ManyToManyField("self", blank=True, symmetrical=False)
+    # photos = models.ImageField(upload_to='photos/', null=True, blank=True, height_field=100, width_field=100)
+
     # files = models.FileField()
 
     class Meta:

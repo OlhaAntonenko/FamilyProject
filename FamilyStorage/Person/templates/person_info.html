@@ -12,7 +12,42 @@
   <p><strong>Date of death:</strong> {{ person.date_of_death }} </p>
   <p><strong>Place of death:</strong> {{ person.place_of_death }} </p>
   <p><strong>Info:</strong> {{ person.info }} </p>
+  <p><strong>Mother:</strong>
+    {% if person.mother %}
+        <a href="{{ person.mother.get_absolute_url }}">{{ person.mother }}</a>
+    {% endif %}
 
+  <p><strong>Father:</strong>
+    {% if person.father %}
+        <a href="{{ person.father.get_absolute_url }}">{{ person.father }}</a>
+    {% endif %}
+</p>
+
+    <p><strong>Children:</strong>
+        <ol>
+        {% for child in person.mother_children.all %}
+            <li><a href="{{ child.get_absolute_url }}">{{ child }}</a></li><br>
+        {% endfor %}
+
+        {% for child in person.father_children.all %}
+            <li><a href="{{ child.get_absolute_url }}">{{ child }}</a></li><br>
+        {% endfor %}
+    </ol>
+
+    <p><strong>Siblings:</strong>
+        <ol>
+        {% for child in person.mother.mother_children.all %}
+            {% if child != person %}
+                <li><a href="{{ child.get_absolute_url }}">{{ child }}</a></li><br>
+            {% endif %}
+        {% endfor %}
+
+        {% for child in person.father.father_children.all %}
+            {% if child != person and child not in person.mother.mother_children.all %}
+                <li><a href="{{ child.get_absolute_url }}">{{ child }}</a></li><br>
+            {% endif %}
+        {% endfor %}
+    </ol>
 <a href="{% url 'update_person' person.id %}" class="btn btn-default">Update</a>
 <br>
 <a href="{% url 'delete_person' person.id %}" class="btn btn-default">Delete</a>
