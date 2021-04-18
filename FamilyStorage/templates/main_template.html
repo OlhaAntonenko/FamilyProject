@@ -7,8 +7,47 @@
 <link rel="icon" href="{% static 'i.png' %}" type="image/png">
 </head>
 <body>
-<style> {
-  font-family: Arial, Helvetica, sans-serif;
+<style>{
+  font-family: Arial, Helvetica, sans-serif;}
+
+body{
+    margin: 0;
+    padding: 0;
+}
+.topmenu {
+    list-style-type: none; /* Убираем маркеры */
+   }
+
+a {
+    color: black;
+    text-decoration: none; /* Убираем подчеркивание у ссылок */
+   }
+
+.submenu {
+  background: #612a11;
+  position: absolute;
+  visibility: hidden;
+  opacity: 0;
+  z-index: 5;
+  width: 125px;
+  top:75px;
+  right: 10px;
+  text-align: left;
+  transform: perspective(600px) rotateX(-90deg);
+  transform-origin: 0% 0%;
+  transition: .6s ease-in-out;
+}
+.topmenu > li:hover .submenu{
+  visibility: visible;
+  opacity: 1;
+  transform: perspective(600px) rotateX(0deg);
+  position:absolute;
+}
+.submenu li a {
+  color: #fab74d;
+  font-size: 15px ;
+  line-height: 36px;
+  padding: 25px 25px;
 }
 
 header {
@@ -16,60 +55,62 @@ header {
   background-color: #612a11;
   padding: 33px;
   text-align: right;
-  font-size: 80%;
+  font-size: 70%;
   color: #fab74d;
   font-family: CENTURY SCHOOLBOOK, Helvetica, sans-serif;
 }
 
 img{
   position:absolute;
-  top:10px;
+  top:8px;
   left:10px;
 }
 h0{
-  font: 35px CENTURY SCHOOLBOOK;
-  top:25px;
+  font: 30px CENTURY SCHOOLBOOK;
+  top:20px;
   left: 80px;
   position:absolute;
+  color: #fab74d;
 }
-aa{
-    font: 20px CENTURY SCHOOLBOOK;
-    top:39px;
-    left: 400px;
+user{
+    font: 22px CENTURY SCHOOLBOOK;
+    top:26px;
+    right: 30px;
     color: #fab74d;
     position:absolute;
 }
-bb{
-    font: 20px CENTURY SCHOOLBOOK;
-    top:39px;
-    left: 520px;
+Homepage{
+    font: 18px CENTURY SCHOOLBOOK;
+    top:10px;
+    left: 40px;
     color: #fab74d;
-    position:absolute;
+
 }
-cc{
-    font: 20px CENTURY SCHOOLBOOK;
-    top:39px;
-    left: 613px;
+Persons{
+    font: 18px CENTURY SCHOOLBOOK;
+    top:20px;
+    left: 40px;
     color: #fab74d;
-    position:absolute;
+
 }
-dd{
-    font: 20px CENTURY SCHOOLBOOK;
-    top:39px;
-    left: 1250px;
+Addperson{
+    font: 18px CENTURY SCHOOLBOOK;
     color: #fab74d;
-    position:absolute;
 }
-ee{
+Logout{
+    font: 18px CENTURY SCHOOLBOOK;
+    color: #fab74d;
+}
+Signin{
     font: 20px CENTURY SCHOOLBOOK;
-    top:39px;
+    top:26px;
     left: 1159px;
     color: #fab74d;
     position:absolute;
 }
-ff{
+Login{
     font: 20px CENTURY SCHOOLBOOK;
-    top:39px;
+    top:26px;
     left: 1250px;
     color: #fab74d;
     position:absolute;
@@ -98,8 +139,9 @@ section::after {
 footer {
   background-color: #612a11;
   padding: 10px;
-  text-align: center;
-  color: floralwhite;
+  text-align: left;
+  color: #fab74d;
+  font: 12px CENTURY SCHOOLBOOK;
 }
 @media (max-width: 600px) {
   nav, text {
@@ -111,21 +153,25 @@ footer {
 </head>
 
 <header>
-<p><img src="{% static 'i.png' %}" alt="Иконка" width="60" height="60"></p>
-<div class = "title"><h0>FamilyGuardian</h0>
-<ul>
- <a href="{% url 'main_page' %}"><aa>Main page</aa></a>
- <a href="{% url 'all_persons' %}"><bb>Persons</bb></a>
- <a href="{% url 'add_person' %}"><cc>Add person</cc></a>
-</ul>
-</div>
+<p><img src="{% static 'i.png' %}" alt="Иконка" width="50" height="50"></p>
+<div class = "title"><a href="{% url 'main_page' %}"><h0>FamilyGuardian</h0></a>   </div>
+
 
     {% if user.is_authenticated %}
-       User: {{ user.get_username }}</p>
-       <a href="{% url 'logout'%}?next={{request.path}}"><dd>Logout</dd></a>
+    <ul class="topmenu">
+      <li><a href="" class="down"><user>{{ user.get_username }}</user></a>
+          <ul class="submenu">
+<!--              <a href="{% url 'home_page' %}"><Homepage>Home page</Homepage></a></p>-->
+              <a href="{% url 'all_persons' %}"><Persons>Persons</Persons></a></p>
+              <a href="{% url 'add_person' %}"><Addperson>Add person</Addperson></a></p>
+              <a href="{% url 'logout'%}?next={{request.path}}"><Logout>Logout</Logout></a></p>
+          </ul>
+      </li>
+    </ul>
+
    {% else %}
-       <a href="{% url 'sign_in'%}?next={{request.path}}"><ee>Sign-in</ee></a>
-       <a href="{% url 'login'%}?next={{request.path}}"><ff>Login</ff></a>
+       <a href="{% url 'sign_in'%}?next={{request.path}}"><Signin>Sign-in</Signin></a>
+       <a href="{% url 'login'%}?next={{request.path}}"><Login>Login</Login></a>
    {% endif %}
 </header>
 
@@ -135,10 +181,11 @@ footer {
   <text>
     {% block content %}{% endblock %}
   </text>
+
 </section>
 
 <footer>
-  <p>Footer</p>
+  <p>© Антоненко Ольга - 2021</p>
 </footer>
 
 </body>
