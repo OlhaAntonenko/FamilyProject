@@ -1,62 +1,92 @@
 {% extends "main_template.html" %}
 {% block title %}{{ person }}{% endblock %}
 {% block content %}
-  <h1>{{ person }}</h1>
 
-  <p><strong>First name:</strong> {{ person.first_name }} </p>
-  <p><strong>Last name:</strong> {{ person.last_name }} </p>
-  <p><strong>Patronymic name:</strong> {{ person.patronymic_name }} </p>
-  <p><strong>Gender:</strong> {{ person.gender }} </p>
-  <p><strong>Date of birth:</strong>
+    <style>
+    a.person {
+        color: #612a11;
+        font-weight: bold;
+        text-decoration: none
+    }
+    table {
+    width: 100%; /* Ширина таблицы */
+    border-spacing: 1px; /* Расстояние между ячейками */
+
+   }
+   td, th {
+    padding: 20px; /* Поля вокруг текста */
+    vertical-align: top;
+   }
+   td.main {
+       width: 60%;
+       padding-left: 30px;
+   }
+   p {
+       font-size: 120%;
+   }
+    </style>
+
+    <h1 align="center">{{ person }}</h1>
+    <table>
+    <tr><td class="main">
+    <p><strong>First name:</strong> {{ person.first_name }} </p>
+    <p><strong>Last name:</strong> {{ person.last_name }} </p>
+    <p><strong>Patronymic name:</strong> {{ person.patronymic_name }} </p>
+    <p><strong>Gender:</strong> {{ person.gender }} </p>
+    <p><strong>Date of birth:</strong>
     {% if person.date_of_birth %}
         {{ person.date_of_birth }} </p>
     {% endif %}
-  <p><strong>Place of birth:</strong> {{ person.place_of_birth }} </p>
-  <p><strong>Date of death:</strong>
+    <p><strong>Place of birth:</strong> {{ person.place_of_birth }} </p>
+    <p><strong>Date of death:</strong>
       {% if person.date_of_death %}
         {{ person.date_of_death }} </p>
       {% endif %}
 
-  <p><strong>Place of death:</strong> {{ person.place_of_death }} </p>
-  <p><strong>Info:</strong> {{ person.info }} </p>
-  <p><strong>Mother:</strong>
+    <p><strong>Place of death:</strong> {{ person.place_of_death }} </p>
+    <p><strong>Info:</strong> {{ person.info }} </p>
+    </td>
+
+    <td>
+    <p><strong>Mother:</strong>
     {% if person.mother %}
-        <a style="text-decoration: none" href="{{ person.mother.get_absolute_url }}">{{ person.mother }}</a>
+        <a class="person" href="{{ person.mother.get_absolute_url }}">{{ person.mother }}</a>
     {% endif %}
 
-  <p><strong>Father:</strong>
+    <br><br>
+    <p><strong>Father:</strong>
     {% if person.father %}
-        <a style="text-decoration: none" href="{{ person.father.get_absolute_url }}">{{ person.father }}</a>
+        <a class="person" href="{{ person.father.get_absolute_url }}">{{ person.father }}</a>
     {% endif %}
 
+    <br><br>
     <p><strong>Siblings:</strong>
-    <ol>
     {% for child in person.mother.mother_children.all %}
         {% if child != person %}
-            <li><a style="text-decoration: none" href="{{ child.get_absolute_url }}">{{ child }}</a></li>
+            <br><a class="person" href="{{ child.get_absolute_url }}">{{ child }}</a>
         {% endif %}
     {% endfor %}
 
     {% for child in person.father.father_children.all %}
         {% if child != person and child not in person.mother.mother_children.all %}
-            <li><a style="text-decoration: none" href="{{ child.get_absolute_url }}">{{ child }}</a></li>
+            <br><a class="person" href="{{ child.get_absolute_url }}">{{ child }}</a>
         {% endif %}
     {% endfor %}
-    </ol>
 
+    <br><br>
     <p><strong>Children:</strong>
-        <ol>
         {% for child in person.mother_children.all %}
-            <li><a style="text-decoration: none" href="{{ child.get_absolute_url }}">{{ child }}</a></li>
+            <br><a class="person" href="{{ child.get_absolute_url }}">{{ child }}</a>
         {% endfor %}
 
         {% for child in person.father_children.all %}
-            <li><a style="text-decoration: none" href="{{ child.get_absolute_url }}">{{ child }}</a></li>
+            <br><a class="person" href="{{ child.get_absolute_url }}">{{ child }}</a>
         {% endfor %}
-    </ol>
-
+    </td>
+    </tr>
+    </table>
 
 <br><br>
-<a style="color: #2b9513; text-decoration: none; font-weight: bold; padding-right: 24px" href="{% url 'update_person' person.id %}" class="btn btn-default">Update</a>
-<a style="color: #a41515; text-decoration: none; font-weight: bold" href="{% url 'delete_person' person.id %}" class="btn btn-default">Delete</a>
+<a style="color: #612a11; text-decoration: none; font-weight: bold; font-size: large; padding-right: 24px" href="{% url 'update_person' person.id %}" class="btn btn-default">Update</a>
+<a style="color: #612a11; text-decoration: none; font-weight: bold; font-size: large;" href="{% url 'delete_person' person.id %}" class="btn btn-default">Delete</a>
 {% endblock %}

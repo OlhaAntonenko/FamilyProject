@@ -10,8 +10,8 @@ class PersonModel(models.Model):
     patronymic_name = models.CharField(max_length=150, default='', blank=True)
     gender = models.CharField(max_length=1, default='N',
                               choices=[('M', 'Male'), ('F', 'Female'), ('N', 'NotKnown')])
-    date_of_birth = models.DateField(null=True, blank=True)
-    date_of_death = models.DateField(null=True, blank=True)
+    date_of_birth = models.DateField(null=True, blank=True, help_text='YYYY-MM-DD format')
+    date_of_death = models.DateField(null=True, blank=True, help_text='YYYY-MM-DD format')
     info = models.TextField(max_length=1000, default='', blank=True)
     place_of_birth = models.CharField(max_length=150, default='', blank=True)
     place_of_death = models.CharField(max_length=150, default='', blank=True)

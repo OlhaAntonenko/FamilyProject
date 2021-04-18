@@ -85,9 +85,9 @@ nav ul {
 text {
   float: left;
   padding: 20px;
-  width: 97%;
+  width: 97.7%;
   background-color: #ddc08d;
-  height: 82vh; /* only for demonstration, should be removed */
+  height: 76vh; /* only for demonstration, should be removed */
 }
 section::after {
   content: "";
@@ -121,7 +121,7 @@ footer {
 </div>
 
     {% if user.is_authenticated %}
-       User: {{ user.get_username }}</p>
+       User: {{ user.get_username }}
        <a href="{% url 'logout'%}?next={{request.path}}"><dd>Logout</dd></a>
    {% else %}
        <a href="{% url 'sign_in'%}?next={{request.path}}"><ee>Sign-in</ee></a>
