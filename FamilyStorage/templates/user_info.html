@@ -1,0 +1,27 @@
+{% extends "main_template.html" %}
+{#{% block title %}{{ user }}{% endblock %}#}
+
+{% block content %}
+
+    <style>
+        a {
+            color: #612a11;
+            font-weight: bold;
+            text-decoration: none
+        }
+        p {
+            font-size: 120%;
+        }
+    </style>
+
+    <h1 align="center">{{ user }}</h1>
+    <p><strong>Username:</strong> {{ user.username }} </p>
+    <p><strong>First name:</strong> {{ user.first_name }} </p>
+    <p><strong>Last name:</strong> {{ user.last_name }} </p>
+    <p><strong>Email:</strong> {{ user.email }} </p>
+    <p><strong>Date joined:</strong> {{ user.date_joined }} </p>
+
+<br><br>
+    <a style="color: #612a11; text-decoration: none; font-weight: bold; font-size: large; padding-right: 24px" href="{% url 'update_user' %}" class="btn btn-default">Update</a>
+    <a style="color: #612a11; text-decoration: none; font-weight: bold; font-size: large;" href="{% url 'delete_user' %}" class="btn btn-default">Delete</a>
+{% endblock %}

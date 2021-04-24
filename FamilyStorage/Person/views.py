@@ -40,6 +40,7 @@ class PersonCreate(LoginRequiredMixin, CreateView):
 class PersonUpdate(LoginRequiredMixin, UpdateView):
     model = PersonModel
     fields = '__all__'
+    success_url = reverse_lazy('all_persons')
 
 
 class PersonDelete(LoginRequiredMixin, DeleteView):

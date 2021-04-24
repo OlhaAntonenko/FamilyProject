@@ -18,7 +18,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 
-from FamilyStorage.views import home_page, main_page, sign_in
+from FamilyStorage.views import UserDelete, UserInfoView, UserUpdate, home_page, main_page, sign_in
 
 urlpatterns = [
     path('', main_page, name='main_page'),
@@ -26,6 +26,9 @@ urlpatterns = [
     path('home/', home_page, name='home_page'),
     path('accounts/', include('django.contrib.auth.urls')),
     path('sign_in/', sign_in, name='sign_in'),
+    path('account/', UserInfoView.as_view(), name='account'),
+    path('account/update/', UserUpdate.as_view(), name='update_user'),
+    path('account/delete/', UserDelete.as_view(), name='delete_user'),
 ]
 
 urlpatterns += [

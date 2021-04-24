@@ -6,14 +6,17 @@
 <title>FamilyGuardian</title>
 <link rel="icon" href="{% static 'i.png' %}" type="image/png">
 </head>
-<body>
-<style>{
-  font-family: Arial, Helvetica, sans-serif;}
 
-body{
+<body>
+<style> {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
     margin: 0;
     padding: 0;
 }
+
 .topmenu {
     list-style-type: none; /* Убираем маркеры */
    }
@@ -24,168 +27,175 @@ a {
    }
 
 .submenu {
-  background: #612a11;
-  position: absolute;
-  visibility: hidden;
-  opacity: 0;
-  z-index: 5;
-  width: 125px;
-  top:75px;
-  right: 10px;
-  text-align: left;
-  transform: perspective(600px) rotateX(-90deg);
-  transform-origin: 0% 0%;
-  transition: .6s ease-in-out;
+    background: #612a11;
+    position: absolute;
+    visibility: hidden;
+    opacity: 0;
+    z-index: 5;
+    width: 125px;
+    top:50px;
+    right: 10px;
+    text-align: left;
+    transform: perspective(600px) rotateX(-90deg);
+    transform-origin: 0% 0%;
+    transition: .6s ease-in-out;
+    padding-top: 20px;
 }
 .topmenu > li:hover .submenu{
-  visibility: visible;
-  opacity: 1;
-  transform: perspective(600px) rotateX(0deg);
-  position:absolute;
+    visibility: visible;
+    opacity: 1;
+    transform: perspective(600px) rotateX(0deg);
+    position:absolute;
 }
 .submenu li a {
-  color: #fab74d;
-  font-size: 15px ;
-  line-height: 36px;
-  padding: 25px 25px;
+    color: #fab74d;
+    font-size: 15px ;
+    line-height: 36px;
+    padding: 25px 25px;
 }
 
 header {
-  position:relative;
-  background-color: #612a11;
-  padding: 33px;
-  text-align: right;
-  font-size: 70%;
-  color: #fab74d;
-  font-family: CENTURY SCHOOLBOOK, Helvetica, sans-serif;
+    position:relative;
+    background-color: #612a11;
+    padding: 33px;
+    text-align: right;
+    font-size: 70%;
+    color: #fab74d;
+    font-family: CENTURY SCHOOLBOOK, Helvetica, sans-serif;
 }
 
-img{
-  position:absolute;
-  top:8px;
-  left:10px;
+img {
+    position:absolute;
+    top:8px;
+    left:10px;
 }
-h0{
-  font: 30px CENTURY SCHOOLBOOK;
-  top:20px;
-  left: 80px;
-  position:absolute;
-  color: #fab74d;
+
+h0 {
+    font: 30px CENTURY SCHOOLBOOK;
+    top:20px;
+    left: 80px;
+    position:absolute;
+    color: #fab74d;
 }
-user{
+
+user {
     font: 22px CENTURY SCHOOLBOOK;
     top:26px;
     right: 30px;
     color: #fab74d;
     position:absolute;
 }
-Homepage{
+
+Homepage {
     font: 18px CENTURY SCHOOLBOOK;
     top:10px;
     left: 40px;
     color: #fab74d;
-
 }
-Persons{
+
+Persons {
     font: 18px CENTURY SCHOOLBOOK;
     top:20px;
     left: 40px;
     color: #fab74d;
+}
 
-}
-Addperson{
+Addperson {
     font: 18px CENTURY SCHOOLBOOK;
     color: #fab74d;
 }
-Logout{
+
+Logout {
     font: 18px CENTURY SCHOOLBOOK;
     color: #fab74d;
 }
-Signin{
+
+Signin {
     font: 20px CENTURY SCHOOLBOOK;
     top:26px;
-    left: 1159px;
+    left: 1650px;
     color: #fab74d;
     position:absolute;
 }
-Login{
+
+Login {
     font: 20px CENTURY SCHOOLBOOK;
     top:26px;
-    left: 1250px;
+    left: 1750px;
     color: #fab74d;
     position:absolute;
 }
 
 nav ul {
-  list-style-type: none;
-  float: left;
-  padding: 10px;
-  line-height: 1.5;
+    list-style-type: none;
+    float: left;
+    padding: 10px;
+    line-height: 1.5;
 }
 
 text {
-  float: left;
-  padding: 20px;
-  width: 97.7%;
-  background-color: #ddc08d;
-  height: 76vh; /* only for demonstration, should be removed */
+    float: left;
+    padding: 20px;
+    width: 97.85%;
+    background-color: #ddc08d;
+    height: 80.8vh; /* only for demonstration, should be removed */
 }
 section::after {
-  content: "";
-  display: table;
-  clear: both;
+    content: "";
+    display: table;
+    clear: both;
 }
 
 footer {
-  background-color: #612a11;
-  padding: 10px;
-  text-align: left;
-  color: #fab74d;
-  font: 12px CENTURY SCHOOLBOOK;
+    background-color: #612a11;
+    padding: 10px;
+    text-align: left;
+    color: #fab74d;
+    font: 12px CENTURY SCHOOLBOOK;
 }
+
 @media (max-width: 600px) {
-  nav, text {
-    width: 100%;
-    height: auto;
-  }
+    nav, text {
+        width: 100%;
+        height: auto;
+    }
 }
 </style>
 </head>
 
 <header>
-<p><img src="{% static 'i.png' %}" alt="Иконка" width="50" height="50"></p>
-<div class = "title"><a href="{% url 'main_page' %}"><h0>FamilyGuardian</h0></a>   </div>
+    <p><img src="{% static 'i.png' %}" alt="Иконка" width="50" height="50"></p>
+    <div class = "title"><a href="{% url 'main_page' %}"><h0>FamilyGuardian</h0></a>   </div>
 
 
     {% if user.is_authenticated %}
-    <ul class="topmenu">
-      <li><a href="" class="down"><user>{{ user.get_username }}</user></a>
-          <ul class="submenu">
-<!--              <a href="{% url 'home_page' %}"><Homepage>Home page</Homepage></a></p>-->
-              <a href="{% url 'all_persons' %}"><Persons>Persons</Persons></a></p>
-              <a href="{% url 'add_person' %}"><Addperson>Add person</Addperson></a></p>
-              <a href="{% url 'logout'%}?next={{request.path}}"><Logout>Logout</Logout></a></p>
-          </ul>
-      </li>
-    </ul>
+        <ul class="topmenu">
+            <li><a href="" class="down"><user>{{ user.get_username }}</user></a>
+                <ul class="submenu">
+                <!--    <a href="{% url 'home_page' %}"><Homepage>Home page</Homepage></a></p>-->
+                {#       TODO       # block for another users#}
+                    <a href="{% url 'account' %}"><Persons>Account</Persons></a></p>
+                    <a href="{% url 'all_persons' %}"><Persons>Persons</Persons></a></p>
+                    <a href="{% url 'add_person' %}"><Addperson>Add person</Addperson></a></p>
+                    <a href="{% url 'logout'%}?next={{request.path}}"><Logout>Logout</Logout></a></p>
+                </ul>
+            </li>
+        </ul>
 
-   {% else %}
-       <a href="{% url 'sign_in'%}?next={{request.path}}"><Signin>Sign-in</Signin></a>
-       <a href="{% url 'login'%}?next={{request.path}}"><Login>Login</Login></a>
-   {% endif %}
+    {% else %}
+        <a href="{% url 'sign_in'%}?next={{request.path}}"><Signin>Sign-in</Signin></a>
+        <a href="{% url 'login'%}?next={{request.path}}"><Login>Login</Login></a>
+    {% endif %}
 </header>
 
-
 <section>
-
-  <text>
-    {% block content %}{% endblock %}
-  </text>
-
+    <text>
+        {% block content %}{% endblock %}
+    </text>
 </section>
 
 <footer>
-  <p>© Антоненко Ольга - 2021</p>
+    <h2>© Антоненко Ольга - 2021</h2>
 </footer>
 
 </body>
