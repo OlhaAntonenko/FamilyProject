@@ -8,8 +8,8 @@ class PersonModel(models.Model):
     first_name = models.CharField(max_length=150, default='')
     last_name = models.CharField(max_length=150, default='', blank=True)
     patronymic_name = models.CharField(max_length=150, default='', blank=True)
-    gender = models.CharField(max_length=1, default='N',
-                              choices=[('M', 'Male'), ('F', 'Female'), ('N', 'NotKnown')])
+    gender = models.CharField(max_length=6, blank=True,
+                              choices=[('Male', 'Male'), ('Female', 'Female')])
     date_of_birth = models.DateField(null=True, blank=True, help_text='YYYY-MM-DD format')
     date_of_death = models.DateField(null=True, blank=True, help_text='YYYY-MM-DD format')
     info = models.TextField(max_length=1000, default='', blank=True)

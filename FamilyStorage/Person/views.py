@@ -2,23 +2,70 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect, reverse
 from django.urls import reverse_lazy
 from django.views import generic
-from django.views.generic.edit import CreateView, DeleteView, UpdateView
-
+from django.views.generic.edit import CreateView, DeleteView, FormMixin
+from django.forms.models import model_to_dict
 from Person.forms import PersonModelForm
 from Person.models import PersonModel
 
 
-class PersonInfoView(LoginRequiredMixin, generic.detail.DetailView):
+class PersonInfoView(FormMixin, LoginRequiredMixin, generic.detail.DetailView):
     template_name = 'person_info.html'
     model = PersonModel
     context_object_name = 'person'
+    form_class = PersonModelForm
 
     def get(self, request, *args, **kwargs):
         response = super(PersonInfoView, self).get(request, *args, **kwargs)
+
+        self.request.session['post_name'] = ''
+        self.request.session['object_id'] = response.context_data['object'].id
+        self.request.session['edit_data'] = []
+
         if request.user == response.context_data['object'].user:
             return response
         else:
             return redirect(reverse('main_page'))
+
+    def get_success_url(self):
+        return reverse("person_info", args=[self.get_object().id])
+
+    def get_context_data(self, **kwargs):
+        ctx = super(PersonInfoView, self).get_context_data(**kwargs)
+        ctx["form"] = self.get_form()
+        ctx["post_name"] = self.request.session.get('post_name')
+        ctx["object_id"] = self.request.session.get('object_id')
+        ctx["edit_data"] = self.request.session.get('edit_data')
+        return ctx
+
+    def get_initial(self):
+        return ({"event": self.get_object(), 'user': self.request.user})
+
+    def post(self, request, *args, **kwargs):
+        req_keys = list(request.POST.keys())
+
+        self.object = self.get_object()
+
+        edit_data = [i.replace('edit__', '') for i in req_keys if 'edit__' in i]
+        if edit_data:
+            request.session['post_name'] = 'edit'
+            request.session['object_id'] = self.object.id
+            request.session['edit_data'] = edit_data
+            return redirect(reverse("person_info", args=[self.object.id]))
+
+        data = model_to_dict(self.object)
+        data.update(request.POST.dict())
+
+        form = self.form_class(data, instance=self.object)
+
+        request.session['post_name'] = 'field'
+        request.session['object_id'] = self.object.id
+        request.session['edit_data'] = []
+
+        if form.is_valid():
+            form.save()
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
 
 
 class PersonListView(LoginRequiredMixin, generic.ListView):
@@ -43,16 +90,6 @@ class PersonCreate(LoginRequiredMixin, CreateView):
         data._mutable = _mutable_old_state
 
         return super().post(request, *args, **kwargs)
-
-    def get(self, request, *args, **kwargs):
-        self.initial.update({'user': request.user})
-        return super().get(request, *args, **kwargs)
-
-
-class PersonUpdate(LoginRequiredMixin, UpdateView):
-    model = PersonModel
-    form_class = PersonModelForm
-    success_url = reverse_lazy('all_persons')
 
     def get(self, request, *args, **kwargs):
         self.initial.update({'user': request.user})

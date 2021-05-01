@@ -64,7 +64,7 @@ header {
     font-family: CENTURY SCHOOLBOOK, Helvetica, sans-serif;
 }
 
-img {
+img.header {
     position:absolute;
     top:8px;
     left:10px;
@@ -164,7 +164,7 @@ footer {
 </head>
 
 <header>
-    <p><img src="{% static 'i.png' %}" alt="Иконка" width="50" height="50"></p>
+    <p><img class="header" src="{% static 'i.png' %}" alt="Иконка" width="50" height="50"></p>
     <div class = "title"><a href="{% url 'main_page' %}"><h0>FamilyGuardian</h0></a>   </div>
 
 

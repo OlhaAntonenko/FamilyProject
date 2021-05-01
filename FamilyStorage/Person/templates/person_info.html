@@ -1,4 +1,5 @@
 {% extends "main_template.html" %}
+{% load static %}
 {% block title %}{{ person }}{% endblock %}
 {% block content %}
 
@@ -13,53 +14,245 @@
     border-spacing: 1px; /* Расстояние между ячейками */
 
    }
-   td, th {
-    padding: 20px; /* Поля вокруг текста */
-    vertical-align: top;
-   }
-   td.main {
-       width: 60%;
-       padding-left: 30px;
-   }
    p {
        font-size: 120%;
    }
+
+    .break {
+    background: #ddc08d; /* Цвет фона */
+    width: 700px; /* Ширина блока */
+    word-break: break-all; /* Перенос слов */
+   }
     </style>
+    <table border="1">
 
-    <h1 align="center">{{ person }}</h1>
-    <table>
-    <tr><td class="main">
-    <p><strong>First name:</strong> {{ person.first_name }} </p>
-    <p><strong>Last name:</strong> {{ person.last_name }} </p>
-    <p><strong>Patronymic name:</strong> {{ person.patronymic_name }} </p>
-    <p><strong>Gender:</strong> {{ person.gender }} </p>
-    <p><strong>Date of birth:</strong>
-    {% if person.date_of_birth %}
-        {{ person.date_of_birth }} </p>
+    <tr>
+    <td style="width: 80%; text-align: center; vertical-align: middle; ">
+        <h1>{{ person }}</h1>
+    </td>
+    <td style="text-align: center; vertical-align: middle;">
+        <a href="{% url 'main_page' %}">
+        <img src="{% static 'pdf icon.png' %}" alt="Иконка" width="40" height="40">
+        </a>
+    </td>
+    <td style="text-align: center; vertical-align: middle;">
+        <a style="color: #612a11; text-decoration: none; font-weight: bold; font-size: large;" href="{% url 'delete_person' person.id %}" class="btn btn-default">Delete</a>
+    </td>
+    </tr>
+    </table>
+
+    <table border="1">
+    <tr><td style="width:60%; padding-top: 20px; padding-left: 150px">
+
+    {#        first_name        #}
+    {% if post_name == 'edit' and object.id == object_id and form.first_name.name in edit_data %}
+        <form action="" method="post">
+            {% csrf_token %}
+            <p><strong>First name:</strong>
+            <input type="text" name="first_name" value={{ person.first_name }}>
+            <input type="submit" name="field" value="Save" /></p>
+        </form>
+
+    {% else %}
+        <form action="" method="post">
+            <p><strong>First name:</strong>
+            {% csrf_token %}
+            {{ person.first_name }}
+            <input type="submit" name=edit__{{ form.first_name.name }} value="edit" /></p>
+        </form>
     {% endif %}
-    <p><strong>Place of birth:</strong> {{ person.place_of_birth }} </p>
-    <p><strong>Date of death:</strong>
-      {% if person.date_of_death %}
-        {{ person.date_of_death }} </p>
-      {% endif %}
 
-    <p><strong>Place of death:</strong> {{ person.place_of_death }} </p>
-    <p><strong>Info:</strong> {{ person.info }} </p>
+    {#        last_name        #}
+    {% if post_name == 'edit' and object.id == object_id and form.last_name.name in edit_data %}
+        <form action="" method="post">
+            {% csrf_token %}
+            <p><strong>Last name:</strong>
+            <input type="text" name="last_name" value={{ person.last_name }}>
+            <input type="submit" name="field" value="Save" /></p>
+        </form>
+
+    {% else %}
+        <form action="" method="post">
+            <p><strong>Last name:</strong>
+            {% csrf_token %}
+            {{ person.last_name }}
+            <input type="submit" name=edit__{{ form.last_name.name }} value="edit" /></p>
+        </form>
+    {% endif %}
+
+    {#        patronymic_name        #}
+    {% if post_name == 'edit' and object.id == object_id and form.patronymic_name.name in edit_data %}
+        <form action="" method="post">
+            {% csrf_token %}
+            <p><strong>Patronymic name:</strong>
+            <input type="text" name="patronymic_name" value={{ person.patronymic_name }}>
+            <input type="submit" name="field" value="Save" /></p>
+        </form>
+
+    {% else %}
+        <form action="" method="post">
+            <p><strong>Patronymic name:</strong>
+            {% csrf_token %}
+            {{ person.patronymic_name }}
+            <input type="submit" name=edit__{{ form.patronymic_name.name }} value="edit" /></p>
+        </form>
+    {% endif %}
+
+    {#        gender        #}
+    {% if post_name == 'edit' and object.id == object_id and form.gender.name in edit_data %}
+        <form action="" method="post">
+            {% csrf_token %}
+            <p><strong>Gender:</strong>
+            {{ form.gender }}
+            <input type="submit" name="field" value="Save" /></p>
+        </form>
+
+    {% else %}
+        <form action="" method="post">
+            <p><strong>Gender:</strong>
+            {% csrf_token %}
+            {{ person.gender }}
+            <input type="submit" name=edit__{{ form.gender.name }} value="edit" /></p>
+        </form>
+    {% endif %}
+
+    {#        date_of_birth        #}
+    {% if post_name == 'edit' and object.id == object_id and form.date_of_birth.name in edit_data %}
+        <form action="" method="post">
+            {% csrf_token %}
+            <p><strong>Date of birth:</strong>
+            <input type="text" name="date_of_birth" value={{ person.date_of_birth }}>
+            <input type="submit" name="field" value="Save" /></p>
+        </form>
+
+    {% else %}
+        <form action="" method="post">
+            <p><strong>Date of birth:</strong>
+            {% csrf_token %}
+                {% if person.date_of_birth %}
+                    {{ person.date_of_birth }} </p>
+                {% endif %}
+            <input type="submit" name=edit__{{ form.date_of_birth.name }} value="edit" /></p>
+        </form>
+    {% endif %}
+
+    {#        place_of_birth        #}
+    {% if post_name == 'edit' and object.id == object_id and form.place_of_birth.name in edit_data %}
+        <form action="" method="post">
+            {% csrf_token %}
+            <p><strong>Place of birth:</strong>
+            <input type="text" name="place_of_birth" value={{ person.place_of_birth }}>
+            <input type="submit" name="field" value="Save" /></p>
+        </form>
+
+    {% else %}
+        <form action="" method="post">
+            <p><strong>Place of birth:</strong>
+            {% csrf_token %}
+            {{ person.place_of_birth }}
+            <input type="submit" name=edit__{{ form.place_of_birth.name }} value="edit" /></p>
+        </form>
+    {% endif %}
+
+    {#        date_of_death        #}
+    {% if post_name == 'edit' and object.id == object_id and form.date_of_death.name in edit_data %}
+        <form action="" method="post">
+            {% csrf_token %}
+            <p><strong>Date of death:</strong>
+            <input type="text" name="date_of_death" value={{ person.date_of_death }}>
+            <input type="submit" name="field" value="Save" /></p>
+        </form>
+
+    {% else %}
+        <form action="" method="post">
+            <p><strong>Date of death:</strong>
+            {% csrf_token %}
+                {% if person.date_of_death %}
+                    {{ person.date_of_death }} </p>
+                {% endif %}
+            <input type="submit" name=edit__{{ form.date_of_death.name }} value="edit" /></p>
+        </form>
+    {% endif %}
+
+    {#        place_of_death        #}
+    {% if post_name == 'edit' and object.id == object_id and form.place_of_death.name in edit_data %}
+        <form action="" method="post">
+            {% csrf_token %}
+            <p><strong>Place of death:</strong>
+            <input type="text" name="place_of_death" value={{ person.place_of_death }}>
+            <input type="submit" name="field" value="Save" /></p>
+        </form>
+
+    {% else %}
+        <form action="" method="post">
+            <p><strong>Place of death:</strong>
+            {% csrf_token %}
+            {{ person.place_of_death }}
+            <input type="submit" name=edit__{{ form.place_of_death.name }} value="edit" /></p>
+        </form>
+    {% endif %}
+
+    {#        info        #}
+    {% if post_name == 'edit' and object.id == object_id and form.info.name in edit_data %}
+        <form action="" method="post">
+            {% csrf_token %}
+            <p><strong>Info:</strong>
+            <textarea name="info" cols="40" rows="10">{{ person.info }}</textarea>
+            <input type="submit" name="field" value="Save" /></p>
+        </form>
+
+    {% else %}
+        <form action="" method="post">
+            <p class="break"><strong>Info:</strong>
+            {% csrf_token %}
+            <div class="break"> {{ person.info|wordwrap:50|linebreaks }}</div>
+
+            <input type="submit" name=edit__{{ form.info.name }} value="edit" /></p>
+        </form>
+    {% endif %}
     </td>
 
     <td>
-    <p><strong>Mother:</strong>
-    {% if person.mother %}
-        <a class="person" href="{{ person.mother.get_absolute_url }}">{{ person.mother }}</a>
+    {#        mother        #}
+    {% if post_name == 'edit' and object.id == object_id and form.mother.name in edit_data %}
+        <form action="" method="post">
+            {% csrf_token %}
+            <p><strong>Mother:</strong>
+            {{ form.mother }}
+            <input type="submit" name="field" value="Save" /></p>
+        </form>
+
+    {% else %}
+        <form action="" method="post">
+            <p><strong>Mother:</strong>
+            {% csrf_token %}
+            {% if person.mother %}
+                <a class="person" href="{{ person.mother.get_absolute_url }}">{{ person.mother }}</a>
+            {% endif %}
+            <input type="submit" name=edit__{{ form.mother.name }} value="edit" /></p>
+        </form>
     {% endif %}
 
-    <br><br>
-    <p><strong>Father:</strong>
-    {% if person.father %}
-        <a class="person" href="{{ person.father.get_absolute_url }}">{{ person.father }}</a>
+    {#        father        #}
+    {% if post_name == 'edit' and object.id == object_id and form.father.name in edit_data %}
+        <form action="" method="post">
+            {% csrf_token %}
+            <p><strong>Father:</strong>
+            {{ form.father }}
+            <input type="submit" name="field" value="Save" /></p>
+        </form>
+
+    {% else %}
+        <form action="" method="post">
+            <p><strong>Father:</strong>
+            {% csrf_token %}
+            {% if person.father %}
+                <a class="person" href="{{ person.father.get_absolute_url }}">{{ person.father }}</a>
+            {% endif %}
+            <input type="submit" name=edit__{{ form.father.name }} value="edit" /></p>
+        </form>
     {% endif %}
 
-    <br><br>
     <p><strong>Siblings:</strong>
     {% for child in person.mother.mother_children.all %}
         {% if child != person %}
@@ -73,7 +266,6 @@
         {% endif %}
     {% endfor %}
 
-    <br><br>
     <p><strong>Children:</strong>
         {% for child in person.mother_children.all %}
             <br><a class="person" href="{{ child.get_absolute_url }}">{{ child }}</a>
@@ -86,7 +278,4 @@
     </tr>
     </table>
 
-<br><br>
-<a style="color: #612a11; text-decoration: none; font-weight: bold; font-size: large; padding-right: 24px" href="{% url 'update_person' person.id %}" class="btn btn-default">Update</a>
-<a style="color: #612a11; text-decoration: none; font-weight: bold; font-size: large;" href="{% url 'delete_person' person.id %}" class="btn btn-default">Delete</a>
 {% endblock %}
