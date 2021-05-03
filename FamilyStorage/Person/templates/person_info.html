@@ -2,6 +2,8 @@
 {% load static %}
 {% block title %}{{ person }}{% endblock %}
 {% block content %}
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.5.1/chosen.min.css">
 
     <style>
     a.person {
@@ -12,8 +14,17 @@
     table {
     width: 100%; /* Ширина таблицы */
     border-spacing: 1px; /* Расстояние между ячейками */
-
    }
+
+    .livesearch {
+        width: 350px;
+    }
+
+    .list {
+        color: #000000;
+        font-size: medium;
+    }
+
    p {
        font-size: 120%;
    }
@@ -36,7 +47,7 @@
         </a>
     </td>
     <td style="text-align: center; vertical-align: middle;">
-        <a style="color: #612a11; text-decoration: none; font-weight: bold; font-size: large;" href="{% url 'delete_person' person.id %}" class="btn btn-default">Delete</a>
+        <a style="color: #d21c06; text-decoration: none; font-weight: bold; font-size: large;" href="{% url 'delete_person' person.id %}" class="btn btn-default">Delete</a>
     </td>
     </tr>
     </table>
@@ -44,7 +55,7 @@
     <table border="1">
     <tr><td style="width:60%; padding-top: 20px; padding-left: 150px">
 
-    {#        first_name        #}
+    <!--        first_name        -->
     {% if post_name == 'edit' and object.id == object_id and form.first_name.name in edit_data %}
         <form action="" method="post">
             {% csrf_token %}
@@ -58,11 +69,13 @@
             <p><strong>First name:</strong>
             {% csrf_token %}
             {{ person.first_name }}
-            <input type="submit" name=edit__{{ form.first_name.name }} value="edit" /></p>
+            <input id="image" type="image" src="{% static 'pencil.png' %}"
+                   alt="edit" width="20" height="20"/>
+            <input type="hidden" name="edit__{{ form.first_name.name }}"></p>
         </form>
     {% endif %}
 
-    {#        last_name        #}
+    <!--        last_name        -->
     {% if post_name == 'edit' and object.id == object_id and form.last_name.name in edit_data %}
         <form action="" method="post">
             {% csrf_token %}
@@ -76,11 +89,13 @@
             <p><strong>Last name:</strong>
             {% csrf_token %}
             {{ person.last_name }}
-            <input type="submit" name=edit__{{ form.last_name.name }} value="edit" /></p>
+            <input id="image" type="image" src="{% static 'pencil.png' %}"
+                   alt="edit" width="20" height="20"/>
+            <input type="hidden" name="edit__{{ form.last_name.name }}"></p>
         </form>
     {% endif %}
 
-    {#        patronymic_name        #}
+    <!--        patronymic_name        -->
     {% if post_name == 'edit' and object.id == object_id and form.patronymic_name.name in edit_data %}
         <form action="" method="post">
             {% csrf_token %}
@@ -94,11 +109,13 @@
             <p><strong>Patronymic name:</strong>
             {% csrf_token %}
             {{ person.patronymic_name }}
-            <input type="submit" name=edit__{{ form.patronymic_name.name }} value="edit" /></p>
+            <input id="image" type="image" src="{% static 'pencil.png' %}"
+                   alt="edit" width="20" height="20"/>
+            <input type="hidden" name="edit__{{ form.patronymic_name.name }}"></p>
         </form>
     {% endif %}
 
-    {#        gender        #}
+    <!--        gender        -->
     {% if post_name == 'edit' and object.id == object_id and form.gender.name in edit_data %}
         <form action="" method="post">
             {% csrf_token %}
@@ -112,11 +129,13 @@
             <p><strong>Gender:</strong>
             {% csrf_token %}
             {{ person.gender }}
-            <input type="submit" name=edit__{{ form.gender.name }} value="edit" /></p>
+            <input id="image" type="image" src="{% static 'pencil.png' %}"
+                   alt="edit" width="20" height="20"/>
+            <input type="hidden" name="edit__{{ form.gender.name }}"></p>
         </form>
     {% endif %}
 
-    {#        date_of_birth        #}
+    <!--        date_of_birth        -->
     {% if post_name == 'edit' and object.id == object_id and form.date_of_birth.name in edit_data %}
         <form action="" method="post">
             {% csrf_token %}
@@ -132,11 +151,14 @@
                 {% if person.date_of_birth %}
                     {{ person.date_of_birth }} </p>
                 {% endif %}
-            <input type="submit" name=edit__{{ form.date_of_birth.name }} value="edit" /></p>
+
+            <input id="image" type="image" src="{% static 'pencil.png' %}"
+                   alt="edit" width="20" height="20"/>
+            <input type="hidden" name="edit__{{ form.date_of_birth.name }}"></p>
         </form>
     {% endif %}
 
-    {#        place_of_birth        #}
+    <!--        place_of_birth        -->
     {% if post_name == 'edit' and object.id == object_id and form.place_of_birth.name in edit_data %}
         <form action="" method="post">
             {% csrf_token %}
@@ -150,11 +172,13 @@
             <p><strong>Place of birth:</strong>
             {% csrf_token %}
             {{ person.place_of_birth }}
-            <input type="submit" name=edit__{{ form.place_of_birth.name }} value="edit" /></p>
+            <input id="image" type="image" src="{% static 'pencil.png' %}"
+                   alt="edit" width="20" height="20"/>
+            <input type="hidden" name="edit__{{ form.place_of_birth.name }}"></p>
         </form>
     {% endif %}
 
-    {#        date_of_death        #}
+    <!--        date_of_death        -->
     {% if post_name == 'edit' and object.id == object_id and form.date_of_death.name in edit_data %}
         <form action="" method="post">
             {% csrf_token %}
@@ -170,11 +194,13 @@
                 {% if person.date_of_death %}
                     {{ person.date_of_death }} </p>
                 {% endif %}
-            <input type="submit" name=edit__{{ form.date_of_death.name }} value="edit" /></p>
+            <input id="image" type="image" src="{% static 'pencil.png' %}"
+                   alt="edit" width="20" height="20"/>
+            <input type="hidden" name="edit__{{ form.date_of_death.name }}"></p>
         </form>
     {% endif %}
 
-    {#        place_of_death        #}
+    <!--        place_of_death        -->
     {% if post_name == 'edit' and object.id == object_id and form.place_of_death.name in edit_data %}
         <form action="" method="post">
             {% csrf_token %}
@@ -188,11 +214,13 @@
             <p><strong>Place of death:</strong>
             {% csrf_token %}
             {{ person.place_of_death }}
-            <input type="submit" name=edit__{{ form.place_of_death.name }} value="edit" /></p>
+            <input id="image" type="image" src="{% static 'pencil.png' %}"
+                   alt="edit" width="20" height="20"/>
+            <input type="hidden" name="edit__{{ form.place_of_death.name }}"></p>
         </form>
     {% endif %}
 
-    {#        info        #}
+    <!--        info        -->
     {% if post_name == 'edit' and object.id == object_id and form.info.name in edit_data %}
         <form action="" method="post">
             {% csrf_token %}
@@ -206,19 +234,38 @@
             <p class="break"><strong>Info:</strong>
             {% csrf_token %}
             <div class="break"> {{ person.info|wordwrap:50|linebreaks }}</div>
-
-            <input type="submit" name=edit__{{ form.info.name }} value="edit" /></p>
+            <input id="image" type="image" src="{% static 'pencil.png' %}"
+                   alt="edit" width="20" height="20"/>
+            <input type="hidden" name="edit__{{ form.info.name }}"></p>
         </form>
     {% endif %}
     </td>
 
     <td>
-    {#        mother        #}
+
+    <!--        mother        -->
     {% if post_name == 'edit' and object.id == object_id and form.mother.name in edit_data %}
-        <form action="" method="post">
+        <form action="" method="post" id={{ form.mother.id_for_label }}>
             {% csrf_token %}
             <p><strong>Mother:</strong>
-            {{ form.mother }}
+
+            <select class="livesearch" name="mother" id={{ form.mother.id_for_label }}>
+                {% for i in form.mother %}
+
+                    {% if person.mother and i.data.value == person.mother.id %}
+                        <option class="list" value={{ i.data.value|stringformat:'s' }} selected>
+                            {{i.choice_label}}
+                        </option>
+
+                    {% else %}
+                        <option class="list" value={{ i.data.value|stringformat:'s' }}>
+                            {{i.choice_label}}
+                        </option>
+
+                    {% endif %}
+
+                {% endfor %}
+            </select>
             <input type="submit" name="field" value="Save" /></p>
         </form>
 
@@ -226,19 +273,38 @@
         <form action="" method="post">
             <p><strong>Mother:</strong>
             {% csrf_token %}
+
             {% if person.mother %}
                 <a class="person" href="{{ person.mother.get_absolute_url }}">{{ person.mother }}</a>
             {% endif %}
-            <input type="submit" name=edit__{{ form.mother.name }} value="edit" /></p>
+            <input id="image" type="image" src="{% static 'pencil.png' %}"
+                   alt="edit" width="20" height="20"/>
+            <input type="hidden" name="edit__{{ form.mother.name }}"></p>
         </form>
     {% endif %}
 
-    {#        father        #}
+    <!--        father        -->
     {% if post_name == 'edit' and object.id == object_id and form.father.name in edit_data %}
         <form action="" method="post">
             {% csrf_token %}
             <p><strong>Father:</strong>
-            {{ form.father }}
+
+            <select class="livesearch" name="father" id={{ form.father.id_for_label }}>
+                {% for i in form.father %}
+                    {% if person.father and i.data.value == person.father.id %}
+                        <option value={{ i.data.value|stringformat:'s' }} selected>
+                            {{i.choice_label}}
+                        </option>
+
+                    {% else %}
+                        <option value={{ i.data.value|stringformat:'s' }}>
+                            {{i.choice_label}}
+                        </option>
+
+                    {% endif %}
+
+                {% endfor %}
+            </select>
             <input type="submit" name="field" value="Save" /></p>
         </form>
 
@@ -249,7 +315,9 @@
             {% if person.father %}
                 <a class="person" href="{{ person.father.get_absolute_url }}">{{ person.father }}</a>
             {% endif %}
-            <input type="submit" name=edit__{{ form.father.name }} value="edit" /></p>
+            <input id="image" type="image" src="{% static 'pencil.png' %}"
+                   alt="edit" width="20" height="20"/>
+            <input type="hidden" name="edit__{{ form.father.name }}"></p>
         </form>
     {% endif %}
 
@@ -277,5 +345,11 @@
     </td>
     </tr>
     </table>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.5.1/chosen.jquery.min.js"></script>
+    <script type="text/javascript">
+        $(".livesearch").chosen();
+    </script>
 
 {% endblock %}
