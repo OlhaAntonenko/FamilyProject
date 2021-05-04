@@ -137,10 +137,10 @@
 
     <!--        date_of_birth        -->
     {% if post_name == 'edit' and object.id == object_id and form.date_of_birth.name in edit_data %}
-        <form action="" method="post">
+        <form action="" method="post" autocomplete="off">
             {% csrf_token %}
             <p><strong>Date of birth:</strong>
-            <input type="text" name="date_of_birth" value={{ person.date_of_birth }}>
+                {{ form.date_of_birth }}
             <input type="submit" name="field" value="Save" /></p>
         </form>
 
@@ -149,7 +149,7 @@
             <p><strong>Date of birth:</strong>
             {% csrf_token %}
                 {% if person.date_of_birth %}
-                    {{ person.date_of_birth }} </p>
+                    {{ person.date_of_birth }}
                 {% endif %}
 
             <input id="image" type="image" src="{% static 'pencil.png' %}"
@@ -180,10 +180,10 @@
 
     <!--        date_of_death        -->
     {% if post_name == 'edit' and object.id == object_id and form.date_of_death.name in edit_data %}
-        <form action="" method="post">
+        <form action="" method="post" autocomplete="off">
             {% csrf_token %}
             <p><strong>Date of death:</strong>
-            <input type="text" name="date_of_death" value={{ person.date_of_death }}>
+            {{ form.date_of_death }}
             <input type="submit" name="field" value="Save" /></p>
         </form>
 
@@ -192,7 +192,7 @@
             <p><strong>Date of death:</strong>
             {% csrf_token %}
                 {% if person.date_of_death %}
-                    {{ person.date_of_death }} </p>
+                    {{ person.date_of_death }}
                 {% endif %}
             <input id="image" type="image" src="{% static 'pencil.png' %}"
                    alt="edit" width="20" height="20"/>
@@ -333,6 +333,7 @@
             <br><a class="person" href="{{ child.get_absolute_url }}">{{ child }}</a>
         {% endif %}
     {% endfor %}
+    </p>
 
     <p><strong>Children:</strong>
         {% for child in person.mother_children.all %}
@@ -342,14 +343,41 @@
         {% for child in person.father_children.all %}
             <br><a class="person" href="{{ child.get_absolute_url }}">{{ child }}</a>
         {% endfor %}
+    </p>
     </td>
     </tr>
     </table>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.5.1/chosen.jquery.min.js"></script>
+
     <script type="text/javascript">
         $(".livesearch").chosen();
+    </script>
+
+  <!-- Fengyuan Chen's Datepicker -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.css"
+          integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE="
+          crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.js"
+            integrity="sha256-/7FLTdzP6CfC1VBAj/rsp3Rinuuu9leMRGd354hvk0k="
+            crossorigin="anonymous"></script>
+
+    <script>
+        $(function () {
+            $("#datepicker").datepicker({
+                format:'dd/mm/yyyy',
+            });
+
+            $( "#id_date_of_birth" ).datepicker({
+                format:'dd/mm/yyyy',
+            });
+
+            $( "#id_date_of_death" ).datepicker({
+                format:'dd/mm/yyyy',
+            });
+        });
     </script>
 
 {% endblock %}

@@ -138,3 +138,5 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",
     '/var/www/static/',
 ]
+
+DATE_INPUT_FORMATS = ['%d/%m/%Y']
