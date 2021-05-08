@@ -32,7 +32,7 @@
     .break {
     background: #ddc08d; /* Цвет фона */
     width: 700px; /* Ширина блока */
-    word-break: break-all; /* Перенос слов */
+    word-break: break-word; /* Перенос слов */
    }
     </style>
     <table border="1">
@@ -42,7 +42,7 @@
         <h1>{{ person }}</h1>
     </td>
     <td style="text-align: center; vertical-align: middle;">
-        <a href="{% url 'main_page' %}">
+        <a href="{% url 'download_person_info'  person.id %}">
         <img src="{% static 'pdf icon.png' %}" alt="Иконка" width="40" height="40">
         </a>
     </td>
@@ -141,7 +141,7 @@
             {% csrf_token %}
             <p><strong>Date of birth:</strong>
                 {{ form.date_of_birth }}
-            <input type="submit" name="field" value="Save" /></p>
+            <input type="submit" name="field" value="Save" id="id_date_of_birth"/></p>
         </form>
 
     {% else %}
@@ -184,7 +184,7 @@
             {% csrf_token %}
             <p><strong>Date of death:</strong>
             {{ form.date_of_death }}
-            <input type="submit" name="field" value="Save" /></p>
+            <input type="submit" name="field" value="Save" id="id_date_of_death"/></p>
         </form>
 
     {% else %}
@@ -233,7 +233,7 @@
         <form action="" method="post">
             <p class="break"><strong>Info:</strong>
             {% csrf_token %}
-            <div class="break"> {{ person.info|wordwrap:50|linebreaks }}</div>
+            <div class="break"> {{ person.info|linebreaks }}</div>
             <input id="image" type="image" src="{% static 'pencil.png' %}"
                    alt="edit" width="20" height="20"/>
             <input type="hidden" name="edit__{{ form.info.name }}"></p>
@@ -241,7 +241,7 @@
     {% endif %}
     </td>
 
-    <td>
+    <td style="padding-top: 20px; padding-left: 50px; vertical-align: top;">
 
     <!--        mother        -->
     {% if post_name == 'edit' and object.id == object_id and form.mother.name in edit_data %}
@@ -322,25 +322,13 @@
     {% endif %}
 
     <p><strong>Siblings:</strong>
-    {% for child in person.mother.mother_children.all %}
-        {% if child != person %}
-            <br><a class="person" href="{{ child.get_absolute_url }}">{{ child }}</a>
-        {% endif %}
-    {% endfor %}
-
-    {% for child in person.father.father_children.all %}
-        {% if child != person and child not in person.mother.mother_children.all %}
-            <br><a class="person" href="{{ child.get_absolute_url }}">{{ child }}</a>
-        {% endif %}
-    {% endfor %}
+        {% for sibling in person.siblings %}
+            <br><a class="person" href="{{ sibling.get_absolute_url }}">{{ sibling }}</a>
+        {% endfor %}
     </p>
 
     <p><strong>Children:</strong>
-        {% for child in person.mother_children.all %}
-            <br><a class="person" href="{{ child.get_absolute_url }}">{{ child }}</a>
-        {% endfor %}
-
-        {% for child in person.father_children.all %}
+        {% for child in person.children %}
             <br><a class="person" href="{{ child.get_absolute_url }}">{{ child }}</a>
         {% endfor %}
     </p>

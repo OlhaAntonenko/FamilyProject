@@ -6,9 +6,9 @@ from Person.models import PersonModel
 
 class PersonModelForm(forms.ModelForm):
     date_of_birth = forms.DateField(input_formats=settings.DATE_INPUT_FORMATS,
-                                    help_text='DD/MM/YYYY')
+                                    help_text='DD/MM/YYYY', required=False)
     date_of_death = forms.DateField(input_formats=settings.DATE_INPUT_FORMATS,
-                                    help_text='DD/MM/YYYY')
+                                    help_text='DD/MM/YYYY', required=False)
 
     def __init__(self, *args, **kwargs):
         super(PersonModelForm, self).__init__(*args, **kwargs)

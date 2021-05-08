@@ -6,7 +6,7 @@
   <p>Your username and password not correct. Please try again.</p>
 {% endif %}
 
-<form method="post" action="{% url 'sign_in' %}">
+<form method="post" action="{% url 'sign_up' %}">
   {% csrf_token %}
   <table>
 

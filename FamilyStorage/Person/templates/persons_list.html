@@ -10,18 +10,20 @@
         }
     </style>
 
+    <h2 style="text-align: center;">People</h2><br>
+
     {% if persons_list %}
         <ol>
             {% for person in persons_list %}
                 <li>
                     <a class="person_list" href="{{ person.get_absolute_url }}">
-                        <h3>{{ person }}</h3>
+                        <h2>{{ person }}</h2>
                     </a>
                 </li>
             {% endfor %}
         </ol>
     {% else %}
-        <p>There are no persons.</p>
+        <h2>There are no persons.</h2>
     {% endif %}
 
 {% endblock %}

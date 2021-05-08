@@ -110,7 +110,7 @@ Logout {
     color: #fab74d;
 }
 
-Signin {
+SignUp {
     font: 20px CENTURY SCHOOLBOOK;
     top:26px;
     left: 1650px;
@@ -174,10 +174,9 @@ footer {
         <ul class="topmenu">
             <li><a href="" class="down"><user>{{ user.get_username }}</user></a>
                 <ul class="submenu">
-                <!--    <a href="{% url 'home_page' %}"><Homepage>Home page</Homepage></a></p>-->
-                {#       TODO       # block for another users#}
                     <a href="{% url 'account' %}"><Persons>Account</Persons></a></p>
-                    <a href="{% url 'all_persons' %}"><Persons>Persons</Persons></a></p>
+                    <a href="{% url 'home_page' %}"><Homepage>Home page</Homepage></a></p>
+                    <a href="{% url 'all_persons' %}"><Persons>People</Persons></a></p>
                     <a href="{% url 'add_person' %}"><Addperson>Add person</Addperson></a></p>
                     <a href="{% url 'logout'%}?next={{request.path}}"><Logout>Logout</Logout></a></p>
                 </ul>
@@ -185,8 +184,8 @@ footer {
         </ul>
 
     {% else %}
-        <a href="{% url 'sign_in'%}?next={{request.path}}"><Signin>Sign-in</Signin></a>
-        <a href="{% url 'login'%}?next={{request.path}}"><Login>Login</Login></a>
+        <a href="{% url 'sign_up'%}?next={{request.path}}"><SignUp>Sign Up</SignUp></a>
+        <a href="{% url 'login'%}?next={{request.path}}"><Login>Log In</Login></a>
     {% endif %}
 </header>
 

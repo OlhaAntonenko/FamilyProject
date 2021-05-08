@@ -1,5 +1,16 @@
 {% extends "main_template.html" %}
+{% load static %}
 {% block title %}Home page{% endblock %}
+
 {% block content %}
-TODO: home page
+    <h2 style="text-align: center;">Diagram</h2><br>
+    <style>
+    .picture {
+        display: block;
+        margin: auto;
+    }
+
+    </style>
+
+    <img class="picture" src="{% static 'graph.png' %}" alt="Иконка">
 {% endblock %}

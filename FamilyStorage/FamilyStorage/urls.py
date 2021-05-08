@@ -18,14 +18,14 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 
-from FamilyStorage.views import UserDelete, UserInfoView, UserUpdate, home_page, main_page, sign_in
+from FamilyStorage.views import UserDelete, UserInfoView, UserUpdate, home_page, main_page, sign_up
 
 urlpatterns = [
     path('', main_page, name='main_page'),
     path('admin/', admin.site.urls),
     path('home/', home_page, name='home_page'),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('sign_in/', sign_in, name='sign_in'),
+    path('sign_up/', sign_up, name='sign_up'),
     path('account/', UserInfoView.as_view(), name='account'),
     path('account/update/', UserUpdate.as_view(), name='update_user'),
     path('account/delete/', UserDelete.as_view(), name='delete_user'),

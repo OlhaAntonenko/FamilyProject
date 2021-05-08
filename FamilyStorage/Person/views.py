@@ -4,8 +4,12 @@ from django.urls import reverse_lazy
 from django.views import generic
 from django.views.generic.edit import CreateView, DeleteView, FormMixin
 from django.forms.models import model_to_dict
+
+from FamilyStorage.settings import STATIC_DIR
 from Person.forms import PersonModelForm
+from Person.helpers import get_pdf_name
 from Person.models import PersonModel
+from django.http import FileResponse
 
 
 class PersonInfoView(FormMixin, LoginRequiredMixin, generic.detail.DetailView):
@@ -99,4 +103,12 @@ class PersonCreate(LoginRequiredMixin, CreateView):
 class PersonDelete(LoginRequiredMixin, DeleteView):
     model = PersonModel
     success_url = reverse_lazy('all_persons')
+
+
+def download(request, pk):
+    person = PersonModel.objects.get(id=pk)
+    pdf_link = get_pdf_name(str(person), person.get_data())
+
+    response = FileResponse(open(STATIC_DIR / pdf_link, 'rb'))
+    return response
 
