@@ -1,5 +1,6 @@
 {% extends "main_template.html" %}
 {% block title %}Add person{% endblock %}
+
 {% block content %}
     <style>
         .list {
@@ -20,55 +21,78 @@
 
         table {
             margin: auto;
+            width: 100%;
         }
 
-        .center {
-            text-align: center;
-        }
     </style>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.5.1/chosen.min.css">
 
     <form action="" method="post" enctype="multipart/form-data" autocomplete="off">
         {% csrf_token %}
-        <table>
-        {% for field in form %}
-            {% if field.name == 'user' %}
-                <tr><td>{{ field.as_hidden }}</td></tr>
-            {% elif field.name == 'date_of_birth' or field.name == 'date_of_death' %}
-                <tr>
-                    <td>{{ field.label_tag }}</td>
-                    <td><input type="text" name="{{ field.name }}"
-                               id="id_{{ field.name }}" placeholder="DD/MM/YYYY"></td>
-                </tr>
-            {% elif field.name == 'info' %}
-                <tr>
-                    <td>{{ field.label_tag }}</td>
-                    <td>
-                        <textarea name="{{ field.name }}" cols="50" rows="10"></textarea>
-                    </td>
-                </tr>
-            {% elif field.name == 'mother' or field.name == 'father' %}
-                <tr>
-                    <td>{{ field.label_tag }}</td>
-                    <td>
-                        <select class="livesearch" name="{{ field.name }}" id={{ field.id_for_label }}>
-                            {% for i in field %}
-                                <option class="list" value={{ i.data.value|stringformat:'s' }}>
-                                    {{i.choice_label}}
-                                </option>
-                            {% endfor %}
-                        </select>
-                    </td>
-            {% else %}
-                <tr>
-                    <td>{{ field.label_tag }}</td>
-                    <td>{{ field }}</td>
-                </tr>
-            {% endif %}
+
+    <table>
+    <tr>
+    <td style="padding-top: 20px; padding-left: 100px; padding-right: 20px;">
+
+    <!--        user        -->
+    {{ form.user.as_hidden }}
+
+    <p>{{ form.first_name.label_tag }}
+    {{ form.first_name }}
+
+    <p>{{ form.last_name.label_tag }}
+    {{ form.last_name }}
+
+    <p>{{ form.patronymic.label_tag }}
+    {{ form.patronymic }}
+
+    <p>{{ form.gender.label_tag }}
+    {{ form.gender }}
+
+    <p>{{ form.date_of_birth.label_tag }}
+    <input type="text" name="date_of_birth" id="id_date_of_birth" placeholder="DD/MM/YYYY">
+
+    <p>{{ form.place_of_birth.label_tag }}
+    {{ form.place_of_birth }}
+
+    <p>{{ form.date_of_death.label_tag }}
+    <input type="text" name="date_of_death" id="id_date_of_death" placeholder="DD/MM/YYYY">
+
+    <p>{{ form.place_of_death.label_tag }}
+    {{ form.place_of_death }}
+    <p><input type="submit" value="Create" /></p>
+    </td>
+
+    <td style="padding-top: 20px; padding-left: 20px; padding-right: 20px; vertical-align: top;">
+
+    <p>{{ form.info.label_tag }}
+    <textarea name="info" cols="50" rows="10"></textarea>
+
+    <p>{{ form.photo.label_tag }}
+    {{ form.photo }}
+
+    <p>{{ form.mother.label_tag }}
+    <select class="livesearch" name="mother" id={{ form.mother.id_for_label }}>
+        {% for i in form.mother %}
+            <option class="list" value={{ i.data.value|stringformat:'s' }}>
+                {{i.choice_label}}
+            </option>
         {% endfor %}
-        </table>
-        <p class="center"><input type="submit" value="Create" /></p>
+    </select>
+
+    <p>{{ form.father.label_tag }}
+    <select class="livesearch" name="father" id={{ form.father.id_for_label }}>
+        {% for i in form.father %}
+            <option class="list" value={{ i.data.value|stringformat:'s' }}>
+                {{i.choice_label}}
+            </option>
+        {% endfor %}
+    </select>
+
+    </td>
+    </tr>
+    </table>
     </form>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
