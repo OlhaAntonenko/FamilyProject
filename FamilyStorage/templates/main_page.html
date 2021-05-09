@@ -1,19 +1,20 @@
 {% extends "main_template.html" %}
+{% load static %}
 {% block title %}FamilyGuardian{% endblock %}
 
 {% block content %}
-    <style>
-        h1 {
-            font: 50px CENTURY SCHOOLBOOK;
-            top:10px;
-            color: #612a11;
-            text-align: center;
-        }
-    </style>
-
+    <h2 style="text-align: center;">Using this site you can:</h2>
+<table style="margin: auto">
+<tr><td>
     <ul>
-        <li><h2>Using this site you can store your family data in convenient form.</h2></li>
-        <li><h2>Free for use. You only need registration.</h2></li>
+        <li><h3>Store your family data in convenient form</h3></li>
+        <img style="padding-left: 100px;" src="{% get_media_prefix %}main_page/person.png" alt="Picture" width="1000">
+        <li><h3>Download data in PDF format</h3></li>
+        <img style="padding-left: 100px;" src="{% get_media_prefix %}main_page/pdf.png" alt="Picture" width="1000">
+        <li><h3>Generate connections between people</h3></li>
+        <img style="padding-left: 100px;" src="{% get_media_prefix %}main_page/connections.png" alt="Picture" width="1000">
+        <li><h3>Free for use. You only need registration.</h3></li>
     </ul>
-
+</td></tr>
+</table>
 {% endblock %}
