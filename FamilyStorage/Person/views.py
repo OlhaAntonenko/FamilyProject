@@ -65,7 +65,8 @@ class PersonInfoView(FormMixin, LoginRequiredMixin, generic.detail.DetailView):
         delete_data = [i.replace('delete__', '') for i in req_keys if 'delete__' in i]
         for field in delete_data:
             field_data = getattr(form.instance, field)
-            (MEDIA_DIR / str(field_data)).unlink(missing_ok=True)
+            if field_data:
+                (MEDIA_DIR / str(field_data)).unlink(missing_ok=True)
             field_data.delete()
 
         request.session['post_name'] = 'field'

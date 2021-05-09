@@ -273,9 +273,10 @@
     {% else %}
         <form action="" method="post">
             {% csrf_token %}
-
-            {% if person.photo %}
-                <img src="{{ person.photo.url }}" alt="Иконка" height="400">
+            {% if form.photo.errors %}
+                {{ form.photo.errors }}
+            {% elif person.photo %}
+                <img src="{{ person.photo.url }}" alt="Main photo" height="400">
             {% else %}
                 <p><strong>Photo:</strong>
             {% endif %}

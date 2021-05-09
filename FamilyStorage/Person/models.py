@@ -2,8 +2,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.shortcuts import reverse
 from django.utils.text import slugify
-
-from FamilyStorage.settings import MEDIA_DIR
+from django.core.exceptions import ValidationError
 
 
 def photo_file_name(instance, *args, **kwargs):
@@ -15,10 +14,14 @@ def photo_file_name(instance, *args, **kwargs):
         if uploaded_type:
             photo_type = uploaded_type
 
-    photo_full_path = MEDIA_DIR / f'photos/{slugify(str(instance))}.{photo_type}'
-    photo_full_path.unlink(missing_ok=True)
-
     return f'photos/{slugify(str(instance))}.{photo_type}'
+
+
+def validate_image(image):
+    file_size = image.file.size
+    limit_mb = 5
+    if file_size > limit_mb * 1024 * 1024:
+        raise ValidationError(f"Max size of file is {limit_mb} MB")
 
 
 class PersonModel(models.Model):
@@ -37,7 +40,8 @@ class PersonModel(models.Model):
                                related_name='mother_children')
     father = models.ForeignKey("self", on_delete=models.CASCADE, null=True, blank=True,
                                related_name='father_children')
-    photo = models.ImageField(upload_to=photo_file_name, null=True, blank=True)
+    photo = models.ImageField(upload_to=photo_file_name, null=True, blank=True,
+                              validators=[validate_image])  # TODO: remove not used images
 
     class Meta:
         ordering = ["last_name", "first_name"]

@@ -44,7 +44,7 @@ def connections_page(req):
             if parent:
                 my_edge = pydot.Edge(i['person'][0], parent, color='black', style='dotted')
                 graph.add_edge(my_edge)
-    graph.write_png('/home/user/MyFolder/FamilyProject/FamilyStorage/static/graph.png')
+    graph.write_png('/home/user/MyFolder/FamilyProject/FamilyStorage/media/connections/graph.png')
     return render(req, 'connections_page.html')
 
 
