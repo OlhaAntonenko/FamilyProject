@@ -36,9 +36,9 @@ class PersonModel(models.Model):
     info = models.TextField(max_length=2000, default='', blank=True)
     place_of_birth = models.CharField(max_length=150, default='', blank=True)
     place_of_death = models.CharField(max_length=150, default='', blank=True)
-    mother = models.ForeignKey("self", on_delete=models.CASCADE, null=True, blank=True,
+    mother = models.ForeignKey("self", on_delete=models.SET_NULL, null=True, blank=True,
                                related_name='mother_children')
-    father = models.ForeignKey("self", on_delete=models.CASCADE, null=True, blank=True,
+    father = models.ForeignKey("self", on_delete=models.SET_NULL, null=True, blank=True,
                                related_name='father_children')
     photo = models.ImageField(upload_to=photo_file_name, null=True, blank=True,
                               validators=[validate_image])  # TODO: remove not used images

@@ -125,9 +125,9 @@ def download(request, pk):
     person = PersonModel.objects.get(id=pk)
     pdf_link = get_pdf_name(str(person), person.get_data())
 
-    link = STATIC_DIR / pdf_link
+    link = MEDIA_DIR / f'pdf/{pdf_link}'
     if link.is_file():
-        response = FileResponse(open(STATIC_DIR / pdf_link, 'rb'))
+        response = FileResponse(open(link, 'rb'))
         return response
     else:
         return HttpResponse('<h3>Can not to create file</h3>')

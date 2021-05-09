@@ -3,7 +3,7 @@ from typing import Iterable
 from fpdf import FPDF
 from django.utils.text import slugify
 
-from FamilyStorage.settings import STATIC_DIR, BASE_DIR
+from FamilyStorage.settings import MEDIA_DIR, BASE_DIR
 
 
 def generate_pdf(name, data, font_name='Times'):
@@ -67,7 +67,7 @@ def get_pdf_name(name, data):
     pdf = generate_pdf(name, data, font_name='Times')
 
     f_name = slugify(name, allow_unicode=True) + '.pdf'
-    path = STATIC_DIR / f_name
+    path = MEDIA_DIR / f'pdf/{f_name}'
 
     path.unlink(missing_ok=True)
 
