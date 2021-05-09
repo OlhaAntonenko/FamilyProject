@@ -33,7 +33,7 @@ class PersonModel(models.Model):
                               choices=[('Male', 'Male'), ('Female', 'Female')])
     date_of_birth = models.DateField(null=True, blank=True, help_text='DD/MM/YYYY')
     date_of_death = models.DateField(null=True, blank=True, help_text='DD/MM/YYYY')
-    info = models.TextField(max_length=1000, default='', blank=True)
+    info = models.TextField(max_length=2000, default='', blank=True)
     place_of_birth = models.CharField(max_length=150, default='', blank=True)
     place_of_death = models.CharField(max_length=150, default='', blank=True)
     mother = models.ForeignKey("self", on_delete=models.CASCADE, null=True, blank=True,
