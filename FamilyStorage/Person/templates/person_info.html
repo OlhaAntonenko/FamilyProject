@@ -31,7 +31,7 @@
 
     .break {
         background: #ddc08d; /* Цвет фона */
-        width: 700px; /* Ширина блока */
+        width: 800px; /* Ширина блока */
         word-break: break-word; /* Перенос слов */
     }
     </style>
@@ -54,14 +54,14 @@
     </table>
 
     <table border="1">
-    <tr><td style="width:60%; padding-top: 20px; padding-left: 150px">
+    <tr><td style="width:60%; padding-top: 20px; padding-left: 50px">
 
     <!--        first_name        -->
     {% if post_name == 'edit' and object.id == object_id and form.first_name.name in edit_data %}
         <form action="" method="post">
             {% csrf_token %}
             <p><strong>First name:</strong>
-            <input type="text" name="first_name" value={{ person.first_name }}>
+            <input type="text" name="first_name" value="{{ person.first_name }}">
             <input type="submit" name="field" value="Save" /></p>
         </form>
 
@@ -81,7 +81,7 @@
         <form action="" method="post">
             {% csrf_token %}
             <p><strong>Last name:</strong>
-            <input type="text" name="last_name" value={{ person.last_name }}>
+            <input type="text" name="last_name" value="{{ person.last_name }}">
             <input type="submit" name="field" value="Save" /></p>
         </form>
 
@@ -101,7 +101,7 @@
         <form action="" method="post">
             {% csrf_token %}
             <p><strong>Patronymic:</strong>
-            <input type="text" name="patronymic" value={{ person.patronymic }}>
+            <input type="text" name="patronymic" value="{{ person.patronymic }}">
             <input type="submit" name="field" value="Save" /></p>
         </form>
 
@@ -172,7 +172,7 @@
         <form action="" method="post">
             {% csrf_token %}
             <p><strong>Place of birth:</strong>
-            <input type="text" name="place_of_birth" value={{ person.place_of_birth }}>
+            <input type="text" name="place_of_birth" value="{{ person.place_of_birth }}">
             <input type="submit" name="field" value="Save" /></p>
         </form>
 
@@ -222,7 +222,7 @@
         <form action="" method="post">
             {% csrf_token %}
             <p><strong>Place of death:</strong>
-            <input type="text" name="place_of_death" value={{ person.place_of_death }}>
+            <input type="text" name="place_of_death" value="{{ person.place_of_death }}">
             <input type="submit" name="field" value="Save" /></p>
         </form>
 
@@ -258,7 +258,7 @@
     {% endif %}
     </td>
 
-    <td style="padding-top: 20px; padding-left: 50px; vertical-align: top;">
+    <td style="padding-top: 20px; padding-left: 50px; padding-right: 50px;vertical-align: top;">
 
     <!--        photo        -->
 
@@ -297,12 +297,12 @@
                 {% for i in form.mother %}
 
                     {% if person.mother and i.data.value == person.mother.id %}
-                        <option class="list" value={{ i.data.value|stringformat:'s' }} selected>
+                        <option class="list" value="{{ i.data.value|stringformat:'s' }}" selected>
                             {{i.choice_label}}
                         </option>
 
                     {% else %}
-                        <option class="list" value={{ i.data.value|stringformat:'s' }}>
+                        <option class="list" value="{{ i.data.value|stringformat:'s' }}">
                             {{i.choice_label}}
                         </option>
 
@@ -336,12 +336,12 @@
             <select class="livesearch" name="father" id={{ form.father.id_for_label }}>
                 {% for i in form.father %}
                     {% if person.father and i.data.value == person.father.id %}
-                        <option class="list" value={{ i.data.value|stringformat:'s' }} selected>
+                        <option class="list" value="{{ i.data.value|stringformat:'s' }}" selected>
                             {{i.choice_label}}
                         </option>
 
                     {% else %}
-                        <option class="list" value={{ i.data.value|stringformat:'s' }}>
+                        <option class="list" value="{{ i.data.value|stringformat:'s' }}">
                             {{i.choice_label}}
                         </option>
 

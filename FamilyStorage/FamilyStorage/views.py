@@ -7,6 +7,7 @@ from django.views import generic
 from django.views.generic.edit import DeleteView, UpdateView
 
 from FamilyStorage.forms import UserForm
+from FamilyStorage.settings import MEDIA_DIR
 from Person.models import PersonModel
 
 
@@ -44,7 +45,13 @@ def connections_page(req):
             if parent:
                 my_edge = pydot.Edge(i['person'][0], parent, color='black', style='dotted')
                 graph.add_edge(my_edge)
-    graph.write_png('/home/user/MyFolder/FamilyProject/FamilyStorage/media/connections/graph.png')
+
+    try:
+        graph.write_png(MEDIA_DIR / 'connections/graph.png')
+    except FileNotFoundError as err:
+        # graphviz need to install on your machine (not with pip) and add to PATH
+        raise err
+
     return render(req, 'connections_page.html')
 
 

@@ -1,20 +1,101 @@
 {% extends "main_template.html" %}
 {% block title %}Add person{% endblock %}
 {% block content %}
-<form action="" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    <table>
-    {% for field in form %}
-        {% if field.name == 'user' %}
-            <td>{{ field.as_hidden }}</td>
-        {% else %}
-            <tr>
-                <td>{{ field.label_tag }}</td>
-                <td>{{ field }}</td>
-            </tr>
-        {% endif %}
-    {% endfor %}
-    </table>
-    <input type="submit" value="Submit" />
-</form>
+    <style>
+        .list {
+            color: #000000;
+            font-size: medium;
+        }
+
+        .livesearch {
+            width: 350px;
+        }
+
+        td {
+            font-size: 20px;
+            line-height: 36px;
+            font-weight: bold;
+            padding-left: 20px;
+        }
+
+        table {
+            margin: auto;
+        }
+
+        .center {
+            text-align: center;
+        }
+    </style>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.5.1/chosen.min.css">
+
+    <form action="" method="post" enctype="multipart/form-data" autocomplete="off">
+        {% csrf_token %}
+        <table>
+        {% for field in form %}
+            {% if field.name == 'user' %}
+                <tr><td>{{ field.as_hidden }}</td></tr>
+            {% elif field.name == 'date_of_birth' or field.name == 'date_of_death' %}
+                <tr>
+                    <td>{{ field.label_tag }}</td>
+                    <td><input type="text" name="{{ field.name }}"
+                               id="id_{{ field.name }}" placeholder="DD/MM/YYYY"></td>
+                </tr>
+            {% elif field.name == 'info' %}
+                <tr>
+                    <td>{{ field.label_tag }}</td>
+                    <td>
+                        <textarea name="{{ field.name }}" cols="50" rows="10"></textarea>
+                    </td>
+                </tr>
+            {% elif field.name == 'mother' or field.name == 'father' %}
+                <tr>
+                    <td>{{ field.label_tag }}</td>
+                    <td>
+                        <select class="livesearch" name="{{ field.name }}" id={{ field.id_for_label }}>
+                            {% for i in field %}
+                                <option class="list" value={{ i.data.value|stringformat:'s' }}>
+                                    {{i.choice_label}}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </td>
+            {% else %}
+                <tr>
+                    <td>{{ field.label_tag }}</td>
+                    <td>{{ field }}</td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+        </table>
+        <p class="center"><input type="submit" value="Create" /></p>
+    </form>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.5.1/chosen.jquery.min.js"></script>
+
+    <script type="text/javascript">
+        $(".livesearch").chosen();
+    </script>
+
+    <!-- Fengyuan Chen's Datepicker -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.css"
+          integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE="
+          crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.js"
+            integrity="sha256-/7FLTdzP6CfC1VBAj/rsp3Rinuuu9leMRGd354hvk0k="
+            crossorigin="anonymous"></script>
+
+    <script>
+        $(function () {
+            $( "#id_date_of_birth" ).datepicker({
+                format:'dd/mm/yyyy',
+            });
+
+            $( "#id_date_of_death" ).datepicker({
+                format:'dd/mm/yyyy',
+            });
+        });
+    </script>
 {% endblock %}

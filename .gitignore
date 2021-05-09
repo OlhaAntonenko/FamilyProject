@@ -8,4 +8,4 @@ local_settings.py
 env/
 venv/
 
-/FamilyStorage/media/connections/
+/FamilyStorage/media/connections/graph.png

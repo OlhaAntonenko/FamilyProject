@@ -51,7 +51,9 @@
             <form action="" method="post">
                 {% csrf_token %}
                 <select class="livesearch" style="width: 350px" name="person_url">
-                    <option class="searching_list" style="display:none">searching by name</option>
+                    <option class="searching_list" style="display:none" value="">
+                        searching by name
+                    </option>
 
                     {% for person in people_list %}
                         <option class="searching_list" value="{{ person.get_absolute_url }}">
