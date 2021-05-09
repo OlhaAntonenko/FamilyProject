@@ -12,9 +12,9 @@
         text-decoration: none
     }
     table {
-    width: 100%; /* Ширина таблицы */
-    border-spacing: 1px; /* Расстояние между ячейками */
-   }
+        width: 100%; /* Ширина таблицы */
+        border-spacing: 1px; /* Расстояние между ячейками */
+    }
 
     .livesearch {
         width: 350px;
@@ -25,16 +25,17 @@
         font-size: medium;
     }
 
-   p {
-       font-size: 120%;
-   }
+    p {
+        font-size: 120%;
+    }
 
     .break {
-    background: #ddc08d; /* Цвет фона */
-    width: 700px; /* Ширина блока */
-    word-break: break-word; /* Перенос слов */
-   }
+        background: #ddc08d; /* Цвет фона */
+        width: 700px; /* Ширина блока */
+        word-break: break-word; /* Перенос слов */
+    }
     </style>
+
     <table border="1">
 
     <tr>
@@ -69,7 +70,7 @@
             <p><strong>First name:</strong>
             {% csrf_token %}
             {{ person.first_name }}
-            <input id="image" type="image" src="{% static 'pencil.png' %}"
+            <input style="padding-left: 10px" id="image" type="image" src="{% static 'pencil.png' %}"
                    alt="edit" width="20" height="20"/>
             <input type="hidden" name="edit__{{ form.first_name.name }}"></p>
         </form>
@@ -89,7 +90,7 @@
             <p><strong>Last name:</strong>
             {% csrf_token %}
             {{ person.last_name }}
-            <input id="image" type="image" src="{% static 'pencil.png' %}"
+            <input style="padding-left: 10px" id="image" type="image" src="{% static 'pencil.png' %}"
                    alt="edit" width="20" height="20"/>
             <input type="hidden" name="edit__{{ form.last_name.name }}"></p>
         </form>
@@ -99,17 +100,17 @@
     {% if post_name == 'edit' and object.id == object_id and form.patronymic_name.name in edit_data %}
         <form action="" method="post">
             {% csrf_token %}
-            <p><strong>Patronymic name:</strong>
+            <p><strong>Patronymic:</strong>
             <input type="text" name="patronymic_name" value={{ person.patronymic_name }}>
             <input type="submit" name="field" value="Save" /></p>
         </form>
 
     {% else %}
         <form action="" method="post">
-            <p><strong>Patronymic name:</strong>
+            <p><strong>Patronymic:</strong>
             {% csrf_token %}
             {{ person.patronymic_name }}
-            <input id="image" type="image" src="{% static 'pencil.png' %}"
+            <input style="padding-left: 10px" id="image" type="image" src="{% static 'pencil.png' %}"
                    alt="edit" width="20" height="20"/>
             <input type="hidden" name="edit__{{ form.patronymic_name.name }}"></p>
         </form>
@@ -129,7 +130,7 @@
             <p><strong>Gender:</strong>
             {% csrf_token %}
             {{ person.gender }}
-            <input id="image" type="image" src="{% static 'pencil.png' %}"
+            <input style="padding-left: 10px" id="image" type="image" src="{% static 'pencil.png' %}"
                    alt="edit" width="20" height="20"/>
             <input type="hidden" name="edit__{{ form.gender.name }}"></p>
         </form>
@@ -140,7 +141,15 @@
         <form action="" method="post" autocomplete="off">
             {% csrf_token %}
             <p><strong>Date of birth:</strong>
-                {{ form.date_of_birth }}
+
+            {% if person.date_of_birth %}
+                <input type="text" name="date_of_birth"
+                       value="{{ person.date_of_birth|date:"d/m/Y" }}" id="id_date_of_birth">
+            {% else %}
+                <input type="text" name="date_of_birth"
+                       id="id_date_of_birth" placeholder="DD/MM/YYYY">
+            {% endif %}
+
             <input type="submit" name="field" value="Save" id="id_date_of_birth"/></p>
         </form>
 
@@ -152,7 +161,7 @@
                     {{ person.date_of_birth }}
                 {% endif %}
 
-            <input id="image" type="image" src="{% static 'pencil.png' %}"
+            <input style="padding-left: 10px" id="image" type="image" src="{% static 'pencil.png' %}"
                    alt="edit" width="20" height="20"/>
             <input type="hidden" name="edit__{{ form.date_of_birth.name }}"></p>
         </form>
@@ -172,7 +181,7 @@
             <p><strong>Place of birth:</strong>
             {% csrf_token %}
             {{ person.place_of_birth }}
-            <input id="image" type="image" src="{% static 'pencil.png' %}"
+            <input style="padding-left: 10px" id="image" type="image" src="{% static 'pencil.png' %}"
                    alt="edit" width="20" height="20"/>
             <input type="hidden" name="edit__{{ form.place_of_birth.name }}"></p>
         </form>
@@ -183,7 +192,15 @@
         <form action="" method="post" autocomplete="off">
             {% csrf_token %}
             <p><strong>Date of death:</strong>
-            {{ form.date_of_death }}
+
+            {% if person.date_of_death %}
+                <input type="text" name="date_of_death"
+                       value="{{ person.date_of_death|date:"d/m/Y" }}" id="id_date_of_death">
+            {% else %}
+                <input type="text" name="date_of_death"
+                       id="id_date_of_death" placeholder="DD/MM/YYYY">
+            {% endif %}
+
             <input type="submit" name="field" value="Save" id="id_date_of_death"/></p>
         </form>
 
@@ -194,7 +211,7 @@
                 {% if person.date_of_death %}
                     {{ person.date_of_death }}
                 {% endif %}
-            <input id="image" type="image" src="{% static 'pencil.png' %}"
+            <input style="padding-left: 10px" id="image" type="image" src="{% static 'pencil.png' %}"
                    alt="edit" width="20" height="20"/>
             <input type="hidden" name="edit__{{ form.date_of_death.name }}"></p>
         </form>
@@ -214,7 +231,7 @@
             <p><strong>Place of death:</strong>
             {% csrf_token %}
             {{ person.place_of_death }}
-            <input id="image" type="image" src="{% static 'pencil.png' %}"
+            <input style="padding-left: 10px" id="image" type="image" src="{% static 'pencil.png' %}"
                    alt="edit" width="20" height="20"/>
             <input type="hidden" name="edit__{{ form.place_of_death.name }}"></p>
         </form>
@@ -234,7 +251,7 @@
             <p class="break"><strong>Info:</strong>
             {% csrf_token %}
             <div class="break"> {{ person.info|linebreaks }}</div>
-            <input id="image" type="image" src="{% static 'pencil.png' %}"
+            <input style="padding-left: 10px" id="image" type="image" src="{% static 'pencil.png' %}"
                    alt="edit" width="20" height="20"/>
             <input type="hidden" name="edit__{{ form.info.name }}"></p>
         </form>
@@ -242,6 +259,32 @@
     </td>
 
     <td style="padding-top: 20px; padding-left: 50px; vertical-align: top;">
+
+    <!--        photo        -->
+
+    {% if post_name == 'edit' and object.id == object_id and form.photo.name in edit_data %}
+        <form action="" method="post" enctype="multipart/form-data" id={{ form.photo.id_for_label }}>
+            {% csrf_token %}
+            <p>{{ form.photo }}
+            <input type="submit" name="field" value="Save" />
+            <input type="submit" name="delete__{{ form.photo.name }}" value="Delete" /></p>
+        </form>
+
+    {% else %}
+        <form action="" method="post">
+            {% csrf_token %}
+
+            {% if person.photo %}
+                <img src="{{ person.photo.url }}" alt="Иконка" height="400">
+            {% else %}
+                <p><strong>Photo:</strong>
+            {% endif %}
+
+            <input style="padding-left: 10px" id="image" type="image" src="{% static 'pencil.png' %}"
+                   alt="edit" width="20" height="20"/>
+            <input type="hidden" name="edit__{{ form.photo.name }}"></p>
+        </form>
+    {% endif %}
 
     <!--        mother        -->
     {% if post_name == 'edit' and object.id == object_id and form.mother.name in edit_data %}
@@ -277,7 +320,7 @@
             {% if person.mother %}
                 <a class="person" href="{{ person.mother.get_absolute_url }}">{{ person.mother }}</a>
             {% endif %}
-            <input id="image" type="image" src="{% static 'pencil.png' %}"
+            <input style="padding-left: 10px" id="image" type="image" src="{% static 'pencil.png' %}"
                    alt="edit" width="20" height="20"/>
             <input type="hidden" name="edit__{{ form.mother.name }}"></p>
         </form>
@@ -292,12 +335,12 @@
             <select class="livesearch" name="father" id={{ form.father.id_for_label }}>
                 {% for i in form.father %}
                     {% if person.father and i.data.value == person.father.id %}
-                        <option value={{ i.data.value|stringformat:'s' }} selected>
+                        <option class="list" value={{ i.data.value|stringformat:'s' }} selected>
                             {{i.choice_label}}
                         </option>
 
                     {% else %}
-                        <option value={{ i.data.value|stringformat:'s' }}>
+                        <option class="list" value={{ i.data.value|stringformat:'s' }}>
                             {{i.choice_label}}
                         </option>
 
@@ -315,7 +358,7 @@
             {% if person.father %}
                 <a class="person" href="{{ person.father.get_absolute_url }}">{{ person.father }}</a>
             {% endif %}
-            <input id="image" type="image" src="{% static 'pencil.png' %}"
+            <input style="padding-left: 10px" id="image" type="image" src="{% static 'pencil.png' %}"
                    alt="edit" width="20" height="20"/>
             <input type="hidden" name="edit__{{ form.father.name }}"></p>
         </form>
@@ -354,10 +397,6 @@
 
     <script>
         $(function () {
-            $("#datepicker").datepicker({
-                format:'dd/mm/yyyy',
-            });
-
             $( "#id_date_of_birth" ).datepicker({
                 format:'dd/mm/yyyy',
             });

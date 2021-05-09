@@ -185,7 +185,7 @@ footer {
 
     {% else %}
         <a href="{% url 'sign_up'%}?next={{request.path}}"><SignUp>Sign Up</SignUp></a>
-        <a href="{% url 'login'%}?next={{request.path}}"><Login>Log In</Login></a>
+        <a href="{% url 'login'%}?next={% url 'home_page' %}"><Login>Log In</Login></a>
     {% endif %}
 </header>
 

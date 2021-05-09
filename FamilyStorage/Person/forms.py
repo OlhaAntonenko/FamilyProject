@@ -13,19 +13,17 @@ class PersonModelForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(PersonModelForm, self).__init__(*args, **kwargs)
         if 'initial' in kwargs:
-            user = kwargs['initial']['user']
-            event = kwargs['initial'].get('event')
+            user = kwargs['initial'].get('user')
+            person = kwargs['initial'].get('event')  # TODO
 
             mother_queryset = PersonModel.objects.filter(user=user)
-            if event:
-                mother_queryset = mother_queryset.exclude(id=kwargs['initial']['event'].id)
-
+            if person:
+                mother_queryset = mother_queryset.exclude(id=person.id)
             self.fields['mother'].queryset = mother_queryset
 
             father_queryset = PersonModel.objects.filter(user=user)
-            if event:
-                father_queryset = father_queryset.exclude(id=kwargs['initial']['event'].id)
-
+            if person:
+                father_queryset = father_queryset.exclude(id=person.id)
             self.fields['father'].queryset = father_queryset
 
     class Meta:

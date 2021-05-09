@@ -5,11 +5,11 @@ from django.views import generic
 from django.views.generic.edit import CreateView, DeleteView, FormMixin
 from django.forms.models import model_to_dict
 
-from FamilyStorage.settings import STATIC_DIR
+from FamilyStorage.settings import MEDIA_DIR, STATIC_DIR
 from Person.forms import PersonModelForm
 from Person.helpers import get_pdf_name
 from Person.models import PersonModel
-from django.http import FileResponse
+from django.http import FileResponse, HttpResponse
 
 
 class PersonInfoView(FormMixin, LoginRequiredMixin, generic.detail.DetailView):
@@ -58,8 +58,15 @@ class PersonInfoView(FormMixin, LoginRequiredMixin, generic.detail.DetailView):
 
         data = model_to_dict(self.object)
         data.update(request.POST.dict())
+        files = request.FILES.dict()
 
-        form = self.form_class(data, instance=self.object)
+        form = self.form_class(data, files, instance=self.object)
+
+        delete_data = [i.replace('delete__', '') for i in req_keys if 'delete__' in i]
+        for field in delete_data:
+            field_data = getattr(form.instance, field)
+            (MEDIA_DIR / str(field_data)).unlink(missing_ok=True)
+            field_data.delete()
 
         request.session['post_name'] = 'field'
         request.session['object_id'] = self.object.id
@@ -109,6 +116,10 @@ def download(request, pk):
     person = PersonModel.objects.get(id=pk)
     pdf_link = get_pdf_name(str(person), person.get_data())
 
-    response = FileResponse(open(STATIC_DIR / pdf_link, 'rb'))
-    return response
+    link = STATIC_DIR / pdf_link
+    if link.is_file():
+        response = FileResponse(open(STATIC_DIR / pdf_link, 'rb'))
+        return response
+    else:
+        return HttpResponse('<h3>Can not to create file</h3>')
 
