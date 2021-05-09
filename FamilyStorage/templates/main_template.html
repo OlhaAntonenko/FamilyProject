@@ -3,7 +3,8 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>FamilyGuardian</title>
+
+<title>{% block title %}{% endblock %}</title>
 <link rel="icon" href="{% static 'i.png' %}" type="image/png">
 </head>
 
@@ -93,7 +94,7 @@ Homepage {
     color: #fab74d;
 }
 
-Persons {
+people {
     font: 18px CENTURY SCHOOLBOOK;
     top:20px;
     left: 40px;
@@ -174,9 +175,9 @@ footer {
         <ul class="topmenu">
             <li><a href="" class="down"><user>{{ user.get_username }}</user></a>
                 <ul class="submenu">
-                    <a href="{% url 'account' %}"><Persons>Account</Persons></a></p>
-                    <a href="{% url 'home_page' %}"><Homepage>Home page</Homepage></a></p>
-                    <a href="{% url 'all_persons' %}"><Persons>People</Persons></a></p>
+                    <a href="{% url 'account' %}"><people>Account</people></a></p>
+                    <a href="{% url 'connections' %}"><Homepage>Connections</Homepage></a></p>
+                    <a href="{% url 'all_people' %}"><people>People</people></a></p>
                     <a href="{% url 'add_person' %}"><Addperson>Add person</Addperson></a></p>
                     <a href="{% url 'logout'%}?next={{request.path}}"><Logout>Logout</Logout></a></p>
                 </ul>
@@ -185,7 +186,7 @@ footer {
 
     {% else %}
         <a href="{% url 'sign_up'%}?next={{request.path}}"><SignUp>Sign Up</SignUp></a>
-        <a href="{% url 'login'%}?next={% url 'home_page' %}"><Login>Log In</Login></a>
+        <a href="{% url 'login'%}?next={% url 'connections' %}"><Login>Log In</Login></a>
     {% endif %}
 </header>
 

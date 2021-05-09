@@ -11,7 +11,7 @@ from Person.models import PersonModel
 
 
 @login_required
-def home_page(req):
+def connections_page(req):
     all_relatives_info = []
 
     for i in PersonModel.objects.filter(user__exact=req.user.id):
@@ -45,7 +45,7 @@ def home_page(req):
                 my_edge = pydot.Edge(i['person'][0], parent, color='black', style='dotted')
                 graph.add_edge(my_edge)
     graph.write_png('/home/user/MyFolder/FamilyProject/FamilyStorage/static/graph.png')
-    return render(req, 'home_page.html')
+    return render(req, 'connections_page.html')
 
 
 def main_page(req):
@@ -90,7 +90,7 @@ class UserUpdate(LoginRequiredMixin, UpdateView):
 
 class UserDelete(LoginRequiredMixin, DeleteView):
     model = User
-    success_url = reverse_lazy('all_persons')
+    success_url = reverse_lazy('all_people')
 
     def get(self, request, *args, **kwargs):
         self.kwargs.update({self.pk_url_kwarg: request.user.id})

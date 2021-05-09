@@ -18,12 +18,14 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 
-from FamilyStorage.views import UserDelete, UserInfoView, UserUpdate, home_page, main_page, sign_up
+from FamilyStorage.views import (
+    UserDelete, UserInfoView, UserUpdate, connections_page, main_page, sign_up
+)
 
 urlpatterns = [
     path('', main_page, name='main_page'),
     path('admin/', admin.site.urls),
-    path('home/', home_page, name='home_page'),
+    path('connections/', connections_page, name='connections'),
     path('accounts/', include('django.contrib.auth.urls')),
     path('sign_up/', sign_up, name='sign_up'),
     path('account/', UserInfoView.as_view(), name='account'),
@@ -32,7 +34,7 @@ urlpatterns = [
 ]
 
 urlpatterns += [
-    path('persons/', include('Person.urls'))
+    path('people/', include('Person.urls'))
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

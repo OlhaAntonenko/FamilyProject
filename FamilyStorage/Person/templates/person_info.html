@@ -43,8 +43,8 @@
         <h1>{{ person }}</h1>
     </td>
     <td style="text-align: center; vertical-align: middle;">
-        <a href="{% url 'download_person_info'  person.id %}">
-        <img src="{% static 'pdf icon.png' %}" alt="Иконка" width="40" height="40">
+        <a href="{% url 'download_person_info'  person.id %}" target="_blank">
+            <img src="{% static 'pdf icon.png' %}" alt="Иконка" width="40" height="40">
         </a>
     </td>
     <td style="text-align: center; vertical-align: middle;">

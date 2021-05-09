@@ -9,7 +9,7 @@ from FamilyStorage.settings import MEDIA_DIR, STATIC_DIR
 from Person.forms import PersonModelForm
 from Person.helpers import get_pdf_name
 from Person.models import PersonModel
-from django.http import FileResponse, HttpResponse
+from django.http import FileResponse, HttpResponse, HttpResponseRedirect
 
 
 class PersonInfoView(FormMixin, LoginRequiredMixin, generic.detail.DetailView):
@@ -81,11 +81,19 @@ class PersonInfoView(FormMixin, LoginRequiredMixin, generic.detail.DetailView):
 
 class PersonListView(LoginRequiredMixin, generic.ListView):
     model = PersonModel
-    context_object_name = 'persons_list'
-    template_name = 'persons_list.html'
+    context_object_name = 'people_list'
+    template_name = 'people_list.html'
 
     def get_queryset(self):
         return PersonModel.objects.filter(user__exact=self.request.user.id)
+
+    @staticmethod
+    def post(req, *args, **kwargs):
+        if req.POST.get('search'):
+            person_url = req.POST.get('person_url')
+            if person_url:
+                return HttpResponseRedirect(person_url)
+        return HttpResponseRedirect(reverse_lazy('all_people'))
 
 
 class PersonCreate(LoginRequiredMixin, CreateView):
@@ -109,7 +117,7 @@ class PersonCreate(LoginRequiredMixin, CreateView):
 
 class PersonDelete(LoginRequiredMixin, DeleteView):
     model = PersonModel
-    success_url = reverse_lazy('all_persons')
+    success_url = reverse_lazy('all_people')
 
 
 def download(request, pk):

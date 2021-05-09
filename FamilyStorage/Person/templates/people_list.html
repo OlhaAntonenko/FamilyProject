@@ -1,0 +1,76 @@
+{% extends "main_template.html" %}
+{% block title %}People{% endblock %}
+
+{% block content %}
+        <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.5.1/chosen.min.css">
+    <style>
+        li.list {
+            color: black;
+            font-size: 20px;
+            line-height: 36px;
+        }
+
+        a.list {
+            color: #612a11;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 22px;
+            padding-left: 10px;
+            line-height: 36px;
+        }
+        .searching_list {
+            color: #000000;
+            font-size: medium;
+            width:500px;
+        }
+        table {
+            width: 100%; /* Ширина таблицы */
+            border-spacing: 1px; /* Расстояние между ячейками */
+        }
+    </style>
+
+    <table>
+    <tr>
+        <td style="padding-left: 100px; vertical-align: top;">
+            {% if people_list %}
+                <ol style="padding-left: 500px;">
+                    {% for person in people_list %}
+                        <li class="list" style="color: black">
+                            <a class="list" href="{{ person.get_absolute_url }}">
+                                {{ person }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ol>
+            {% else %}
+                <h2>There are no people.</h2>
+            {% endif %}
+        </td>
+        <td style="padding-top: 20px; padding-left: 50px; vertical-align: top;">
+            <form action="" method="post">
+                {% csrf_token %}
+                <select class="livesearch" style="width: 350px" name="person_url">
+                    <option class="searching_list" style="display:none">searching by name</option>
+
+                    {% for person in people_list %}
+                        <option class="searching_list" value="{{ person.get_absolute_url }}">
+                            {{ person }}
+                        </option>
+                    {% endfor %}
+                </select>
+                <input type="submit" name="search" value="Open"/></p>
+            </form>
+        </td>
+
+    </tr>
+    </table>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.5.1/chosen.jquery.min.js"></script>
+
+    <script type="text/javascript">
+        $(".livesearch").chosen();
+    </script>
+
+{% endblock %}
