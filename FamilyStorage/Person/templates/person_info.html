@@ -96,12 +96,12 @@
         </form>
     {% endif %}
 
-    <!--        patronymic_name        -->
-    {% if post_name == 'edit' and object.id == object_id and form.patronymic_name.name in edit_data %}
+    <!--        patronymic        -->
+    {% if post_name == 'edit' and object.id == object_id and form.patronymic.name in edit_data %}
         <form action="" method="post">
             {% csrf_token %}
             <p><strong>Patronymic:</strong>
-            <input type="text" name="patronymic_name" value={{ person.patronymic_name }}>
+            <input type="text" name="patronymic" value={{ person.patronymic }}>
             <input type="submit" name="field" value="Save" /></p>
         </form>
 
@@ -109,10 +109,10 @@
         <form action="" method="post">
             <p><strong>Patronymic:</strong>
             {% csrf_token %}
-            {{ person.patronymic_name }}
+            {{ person.patronymic }}
             <input style="padding-left: 10px" id="image" type="image" src="{% static 'pencil.png' %}"
                    alt="edit" width="20" height="20"/>
-            <input type="hidden" name="edit__{{ form.patronymic_name.name }}"></p>
+            <input type="hidden" name="edit__{{ form.patronymic.name }}"></p>
         </form>
     {% endif %}
 
