@@ -19,7 +19,7 @@ def photo_file_name(instance, *args, **kwargs):
 
 def validate_image(image):
     file_size = image.file.size
-    limit_mb = 5
+    limit_mb = 20
     if file_size > limit_mb * 1024 * 1024:
         raise ValidationError(f"Max size of file is {limit_mb} MB")
 
