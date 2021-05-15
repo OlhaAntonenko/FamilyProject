@@ -1,204 +1,172 @@
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
-<head>
-<meta charset="utf-8">
 
-<title>{% block title %}{% endblock %}</title>
-<link rel="icon" href="{% static 'emblema.png' %}" type="image/png">
+<head>
+    <meta charset="utf-8">
+
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="icon" href="{% static 'emblema.png' %}" type="image/png">
+
+    <style>
+
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        li {
+            list-style-type: none;
+        }
+
+        a {
+            color: black;
+            text-decoration: none;
+           }
+
+        .submenu {
+            background: #612a11;
+            position: absolute;
+            visibility: hidden;
+            opacity: 0;
+            z-index: 5;
+            width: 125px;
+            top:50px;
+            right: 10px;
+            text-align: left;
+            transform: perspective(600px) rotateX(-90deg);
+            transform-origin: 0 0;
+            transition: .6s ease-in-out;
+            padding-top: 20px;
+        }
+
+        .topmenu > li:hover .submenu{
+            visibility: visible;
+            opacity: 1;
+            transform: perspective(600px) rotateX(0deg);
+            position:absolute;
+        }
+
+        .submenu li a {
+            color: #fab74d;
+            font: 18px CENTURY SCHOOLBOOK;
+            line-height: 36px;
+        }
+
+        header {
+            position:relative;
+            background-color: #612a11;
+            padding: 33px;
+            text-align: right;
+            font-size: 70%;
+            color: #fab74d;
+            font-family: CENTURY SCHOOLBOOK, Helvetica, sans-serif;
+        }
+
+        img.header {
+            position:absolute;
+            top:8px;
+            left:10px;
+        }
+
+        div.title {
+            font: 30px CENTURY SCHOOLBOOK;
+            top:20px;
+            left: 80px;
+            position:absolute;
+            color: #fab74d;
+        }
+
+        div.user {
+            font: 22px CENTURY SCHOOLBOOK;
+            top:26px;
+            right: 50px;
+            color: #fab74d;
+            position:absolute;
+        }
+
+        div.signup {
+            font: 20px CENTURY SCHOOLBOOK;
+            top:26px;
+            left: 1650px;
+            color: #fab74d;
+            position:absolute;
+        }
+
+        div.login {
+            font: 20px CENTURY SCHOOLBOOK;
+            top:26px;
+            left: 1750px;
+            color: #fab74d;
+            position:absolute;
+        }
+
+        text {
+            float: left;
+            padding: 20px;
+            width: 97.85%;
+            background-color: #ddc08d;
+            height: 80.6vh;
+            overflow: auto;
+        }
+
+        section::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        footer {
+            background-color: #612a11;
+            padding: 10px;
+            text-align: left;
+            color: #fab74d;
+            font: 12px CENTURY SCHOOLBOOK;
+        }
+
+    </style>
 </head>
 
 <body>
-<style> {
-    font-family: Arial, Helvetica, sans-serif;
-}
+    <header>
+        <img class="header" src="{% static 'emblema.png' %}" alt="Иконка" width="50" height="50">
+        <a href="{% url 'main_page' %}"><div class = "title">FamilyGuardian</div></a>
 
-body {
-    margin: 0;
-    padding: 0;
-}
+        {% if user.is_authenticated %}
+            <ul class="topmenu">
+                <li><a href="" class="down"><div class="user">{{ user.get_username }}</div></a>
+                    <ul class="submenu">
+                        <li><a href="{% url 'account' %}">Account</a></li>
+                        <li><a href="{% url 'connections' %}">Connections</a></li>
+                        <li><a href="{% url 'all_people' %}">People</a></li>
+                        <li><a href="{% url 'add_person' %}">Add person</a></li>
+                        <li><a href="{% url 'logout'%}?next={{request.path}}">Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
 
-.topmenu {
-    list-style-type: none; /* Убираем маркеры */
-   }
+        {% else %}
+            <a href="{% url 'sign_up'%}?next={{request.path}}">
+                <div class="signup">Sign Up</div>
+            </a>
 
-a {
-    color: black;
-    text-decoration: none; /* Убираем подчеркивание у ссылок */
-   }
+            <a href="{% url 'login'%}?next={% url 'connections' %}">
+                <div class="login">Log In</div>
+            </a>
 
-.submenu {
-    background: #612a11;
-    position: absolute;
-    visibility: hidden;
-    opacity: 0;
-    z-index: 5;
-    width: 125px;
-    top:50px;
-    right: 10px;
-    text-align: left;
-    transform: perspective(600px) rotateX(-90deg);
-    transform-origin: 0% 0%;
-    transition: .6s ease-in-out;
-    padding-top: 20px;
-}
-.topmenu > li:hover .submenu{
-    visibility: visible;
-    opacity: 1;
-    transform: perspective(600px) rotateX(0deg);
-    position:absolute;
-}
-.submenu li a {
-    color: #fab74d;
-    font-size: 15px ;
-    line-height: 36px;
-    padding: 25px 25px;
-}
+        {% endif %}
+    </header>
 
-header {
-    position:relative;
-    background-color: #612a11;
-    padding: 33px;
-    text-align: right;
-    font-size: 70%;
-    color: #fab74d;
-    font-family: CENTURY SCHOOLBOOK, Helvetica, sans-serif;
-}
+    <section>
+        <text>
+            {% block content %}{% endblock %}
+        </text>
+    </section>
 
-img.header {
-    position:absolute;
-    top:8px;
-    left:10px;
-}
-
-h0 {
-    font: 30px CENTURY SCHOOLBOOK;
-    top:20px;
-    left: 80px;
-    position:absolute;
-    color: #fab74d;
-}
-
-user {
-    font: 22px CENTURY SCHOOLBOOK;
-    top:26px;
-    right: 30px;
-    color: #fab74d;
-    position:absolute;
-}
-
-Homepage {
-    font: 18px CENTURY SCHOOLBOOK;
-    top:10px;
-    left: 40px;
-    color: #fab74d;
-}
-
-people {
-    font: 18px CENTURY SCHOOLBOOK;
-    top:20px;
-    left: 40px;
-    color: #fab74d;
-}
-
-Addperson {
-    font: 18px CENTURY SCHOOLBOOK;
-    color: #fab74d;
-}
-
-Logout {
-    font: 18px CENTURY SCHOOLBOOK;
-    color: #fab74d;
-}
-
-SignUp {
-    font: 20px CENTURY SCHOOLBOOK;
-    top:26px;
-    left: 1650px;
-    color: #fab74d;
-    position:absolute;
-}
-
-Login {
-    font: 20px CENTURY SCHOOLBOOK;
-    top:26px;
-    left: 1750px;
-    color: #fab74d;
-    position:absolute;
-}
-
-nav ul {
-    list-style-type: none;
-    float: left;
-    padding: 10px;
-    line-height: 1.5;
-}
-
-text {
-    float: left;
-    padding: 20px;
-    width: 97.85%;
-    background-color: #ddc08d;
-    height: 80.6vh; /* only for demonstration, should be removed */
-    overflow: auto;
-}
-
-section::after {
-    content: "";
-    display: table;
-    clear: both;
-}
-
-footer {
-    background-color: #612a11;
-    padding: 10px;
-    text-align: left;
-    color: #fab74d;
-    font: 12px CENTURY SCHOOLBOOK;
-}
-
-@media (max-width: 600px) {
-    nav, text {
-        width: 100%;
-        height: auto;
-    }
-}
-</style>
-</head>
-
-<header>
-    <p><img class="header" src="{% static 'emblema.png' %}" alt="Иконка" width="50" height="50"></p>
-    <div class = "title"><a href="{% url 'main_page' %}"><h0>FamilyGuardian</h0></a>   </div>
-
-
-    {% if user.is_authenticated %}
-        <ul class="topmenu">
-            <li><a href="" class="down"><user>{{ user.get_username }}</user></a>
-                <ul class="submenu">
-                    <a href="{% url 'account' %}"><people>Account</people></a></p>
-                    <a href="{% url 'connections' %}"><Homepage>Connections</Homepage></a></p>
-                    <a href="{% url 'all_people' %}"><people>People</people></a></p>
-                    <a href="{% url 'add_person' %}"><Addperson>Add person</Addperson></a></p>
-                    <a href="{% url 'logout'%}?next={{request.path}}"><Logout>Logout</Logout></a></p>
-                </ul>
-            </li>
-        </ul>
-
-    {% else %}
-        <a href="{% url 'sign_up'%}?next={{request.path}}"><SignUp>Sign Up</SignUp></a>
-        <a href="{% url 'login'%}?next={% url 'connections' %}"><Login>Log In</Login></a>
-    {% endif %}
-</header>
-
-<section>
-    <text>
-        {% block content %}{% endblock %}
-    </text>
-</section>
-
-<footer>
-    <h2>© Antonenko Olha - 2021</h2>
-</footer>
+    <footer>
+        <h2>© Antonenko Olha - 2021</h2>
+    </footer>
 
 </body>
+
 </html>
