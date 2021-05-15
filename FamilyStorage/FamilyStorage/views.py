@@ -1,3 +1,5 @@
+import os
+
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
@@ -46,8 +48,12 @@ def connections_page(req):
                 my_edge = pydot.Edge(i['person'][0], parent, color='black', style='dotted')
                 graph.add_edge(my_edge)
 
+    directory = MEDIA_DIR / 'connections'
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+
     try:
-        graph.write_png(MEDIA_DIR / 'connections/graph.png')
+        graph.write_png(directory / 'graph.png')
     except FileNotFoundError as err:
         # graphviz need to install on your machine (not with pip) and add to PATH
         raise err
